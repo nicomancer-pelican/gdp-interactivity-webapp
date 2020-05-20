@@ -22,9 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
       speechRecognitionList.addFromString(grammar, 1);        //add grammar - optional weight value from 0 to 1
 
       recognition.grammars = speechRecognitionList;   //add speech grammar list
-      recognition.continuous = false;                 //determines if continuous results are captured or not
       recognition.lang = 'en-US';                     //set language - good practice
-      recognition.interimResults = false;             //determines if interim results should be returned or just final
       recognition.maxAlternatives = 1;                //sets number of alternative potential matches that should be returned per result
 
       const stop = () => {
@@ -66,3 +64,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   })
   
+
+  
+  // SIDE BAR
+  /* Set the width of the sidebar to 250px (show it) */
+function openNav() {
+  document.getElementById("mySidepanel").style.width = "250px";
+}
+
+/* Set the width of the sidebar to 0 (hide it) */
+function closeNav() {
+  document.getElementById("mySidepanel").style.width = "0";
+}
