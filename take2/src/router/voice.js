@@ -6,7 +6,7 @@ var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEv
 
 // GRAMMAR - define grammar the app should recognise
 // grammar format used is JSpeech Grammar Format (JSGF) - https://www.w3.org/TR/jsgf/
-var colors = [ 'aqua' , 'azure' , 'beige', 'bisque', 'black', 'blue', 'brown', 'chocolate', 'coral' ];
+var colors = [ 'aqua' , 'azure' , 'beige', 'bisque', 'blue', 'brown', 'chocolate', 'coral' ];
 var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;'
 
 // define speech recognition instance
@@ -33,7 +33,7 @@ colors.forEach(function(v, i, a){
 });
 hints.innerHTML = 'Tap/click then say a color to change the background color of the app. Try ' + colorHTML + '.';
 
-document.body.onclick = function() {
+document.main.onclick = function() {
   recognition.start();
   console.log('Ready to receive a color command.');
 }
