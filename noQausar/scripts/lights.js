@@ -10,7 +10,6 @@ window.addEventListener('DOMContentLoaded', () => {
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
     var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
-
     // GRAMMAR - define grammar the app should recognise
     // grammar format used is JSpeech Grammar Format (JSGF) - https://www.w3.org/TR/jsgf/
     var colors = [ 'aqua' , 'azure' , 'beige', 'bisque', 'blue', 'brown', 'chocolate', 'coral' ];
@@ -70,6 +69,7 @@ window.addEventListener('DOMContentLoaded', () => {
     recognition.onerror = function(event) {
         diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
     }
+});
         
 
     
@@ -83,4 +83,3 @@ window.addEventListener('DOMContentLoaded', () => {
     function closeNav() {
         document.getElementById("mySidepanel").style.width = "0";
     }
-});

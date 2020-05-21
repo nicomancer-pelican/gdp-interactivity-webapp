@@ -17,28 +17,37 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // DEFINE SPEECH RECOGNITION INSTANCE (or display that browser in not compatible)
     if (typeof SpeechRecognition !== 'undefined') {
+      let listening = false;                                  //currently not listening for speech
       const recognition = new SpeechRecognition()             //new instance
+
       var speechRecognitionList = new SpeechGrammarList();    //new grammar list to contain grammar
       speechRecognitionList.addFromString(grammar, 1);        //add grammar - optional weight value from 0 to 1
 
+      recognition.continuous = false                  //determines if continous results are captured or not
+      recognition.interimResults = false              //determines if interim results should be returned or just final
       recognition.grammars = speechRecognitionList;   //add speech grammar list
       recognition.lang = 'en-US';                     //set language - good practice
       recognition.maxAlternatives = 1;                //sets number of alternative potential matches that should be returned per result
 
-      const stop = () => {
-        main.classList.remove('speaking')
-        recognition.stop()
-        button.textContent = 'Start listening'
-      }
-  
+      //function to start SpeechRecognition
       const start = () => {
-        main.classList.add('speaking')
-        recognition.start()
-        button.textContent = 'Stop listening'
+        console.log('listening')
+        recognition.start()                     //start the speech recogniser
+        button.textContent = 'Stop listening'   //change button text
       }
-  
+
+      //function to end SpeechRecognition
+      const stop = () => {
+        console.log('not listening')
+        recognition.stop()                      //stop the speech recogniser
+        button.textContent = 'Start listening'  //change button text
+      }
+
+      //function to respond to  SpeechRecognition results
       const onResult = event => {
+        console.log('recieved')
         result.innerHTML = ''
+        button.textContent = 'click to retry'
         for (const res of event.results) {
           const text = document.createTextNode(res[0].transcript)
           const p = document.createElement('p')
@@ -49,8 +58,6 @@ window.addEventListener('DOMContentLoaded', () => {
           result.appendChild(p)
         }
       }
-      recognition.continuous = true
-      recognition.interimResults = true
       recognition.addEventListener('result', onResult)
       button.addEventListener('click', event => {
         listening ? stop() : start()
