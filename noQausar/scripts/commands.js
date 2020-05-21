@@ -3,7 +3,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const button = document.getElementById('button')
     const result = document.getElementById('result')
     const main = document.getElementsByTagName('main')[0]
-    let listening = false
 
     // CHROME SUPPORT
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -48,16 +47,13 @@ window.addEventListener('DOMContentLoaded', () => {
         console.log('recieved')
         result.innerHTML = ''
         button.textContent = 'click to retry'
-        for (const res of event.results) {
-          const text = document.createTextNode(res[0].transcript)
-          const p = document.createElement('p')
-          if (res.isFinal) {
-            p.classList.add('final')
-          }
-          p.appendChild(text)
-          result.appendChild(p)
-        }
+        var text = event.results[0][0].transcript;
+        result.textContent = 'Result received: ' + text + '.';
+
+        console.log('Confidence: ' + event.results[0][0].confidence);
       }
+
+      //what to execute
       recognition.addEventListener('result', onResult)
       button.addEventListener('click', event => {
         listening ? stop() : start()
