@@ -1,0 +1,30 @@
+{
+    "interactions": {
+      "commands": null,
+      "lights": null
+    },
+
+
+    "commands": {
+      "one": {
+        "manoeuvre": "doughnut",
+        "completed": true
+      },
+      "two": {
+          "manoeuvre" : "triangle",
+          "completed" : true
+      },
+      "three": {
+          "manoeuvre" : "square",
+          "completed" : false
+      }
+    },
+
+
+    "lights": {
+      "1": "white",
+      "2": "green",
+      "3": "blue"
+    }
+  }
+  

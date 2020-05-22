@@ -9,6 +9,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList
     const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent
 
+    // FIREBASE REALTIME DATABASE BITS AND BOBS
+    var database = firebase.database();
+    var dbRef = firebase.database().ref('commands');
+
     // GRAMMAR - define grammar the app should recognise
     // grammar format used is JSpeech Grammar Format (JSGF) - https://www.w3.org/TR/jsgf/
     var keywords = ['doughnut', 'square', 'triangle'];
@@ -51,6 +55,14 @@ window.addEventListener('DOMContentLoaded', () => {
         result.textContent = 'Result received: ' + text + '.';
 
         console.log('Confidence: ' + event.results[0][0].confidence);
+
+        //add to database
+        var commandListRef = firebase.database().ref(dbRef)
+        var newCommandRef = commandListRef.push();
+        newCommandRef.set({
+          'manoeuvre' : text,
+          'complete' : false
+        })
       }
 
       //what to execute
