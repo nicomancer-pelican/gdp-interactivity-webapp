@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Home</title>
+    <link rel="stylesheet" href="./style.css" />
+    <!-- Load an icon library -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+
+  <body>
+    <header>
+      <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html"><i class="material-icons">home</i> Home</a>
+        <a href="commands.html"><i class="material-icons">record_voice_over</i> Commands</a>
+        <a href="lights.html"><i class="material-icons">lightbulb</i> Lights</a>
+        <a href="sounds.html"><i class="material-icons">speaker</i> Sounds</a>
+        <a href="help.html"><i class="material-icons">help</i> Help</a>
+        <a href="report.html"><i class="material-icons">feedback</i> Report</a>
+      </div>
+
+      <button class="openbtn" onclick="openNav()">&#9776; </button>
+
+      <h1>Autonomous Airship</h1>
+    </header>
+    <main>
+      <p>
+        This web app is part of the Autonomous Airship Group Design Project of 2020.
+        You can use this interface to control certain aspects of the blimp.
+      </p>
+    </main>
+    <footer>
+      <p>Imperial College London</p>
+    </footer>
+
+    <script type="text/javascript" src="./scripts/home.js"></script>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDf4XsjHsXLWF62d53Ju6RGfgvTmQAnWRc",
+        authDomain: "airship-a31a9.firebaseapp.com",
+        databaseURL: "https://airship-a31a9.firebaseio.com",
+        projectId: "airship-a31a9",
+        storageBucket: "airship-a31a9.appspot.com",
+        messagingSenderId: "72145400100",
+        appId: "1:72145400100:web:c72b6ee1af04aee2cec3b1"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+  </body>
+</html>
