@@ -60,7 +60,7 @@ function square()
 end
 
 function ellipse()
-    load('doughnut.mat')
+    load('ellipse.mat')
     figure; hold on;
     axis([-1,11,-1,11])
     grid on;

@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // GRAMMAR - define grammar the app should recognise
     // grammar format used is JSpeech Grammar Format (JSGF) - https://www.w3.org/TR/jsgf/
-    var keywords = ['doughnut', 'square', 'triangle'];
+    var keywords = ['doughnut' , 'square' , 'triangle'];
     var grammar = '#JSGF V1.0; grammar keywords; public <keywords> = ' + keywords.join(' | ') + ' ;'
 
     // DEFINE SPEECH RECOGNITION INSTANCE (or display that browser in not compatible)
@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', () => {
       recognition.continuous = false                  //determines if continous results are captured or not
       recognition.interimResults = false              //determines if interim results should be returned or just final
       recognition.grammars = speechRecognitionList;   //add speech grammar list
-      recognition.lang = 'en-US';                     //set language - good practice
+      recognition.lang = 'en-GB';                     //set language - good practice
       recognition.maxAlternatives = 1;                //sets number of alternative potential matches that should be returned per result
 
       //function to start SpeechRecognition
@@ -69,7 +69,6 @@ window.addEventListener('DOMContentLoaded', () => {
           })
 
           confirm.setAttribute('hidden', true)
-          result.textContent = ''
         })
       }
 
@@ -89,8 +88,8 @@ window.addEventListener('DOMContentLoaded', () => {
   
 
   
-  // SIDE BAR
-  /* Set the width of the sidebar to 250px (show it) */
+// SIDE BAR
+/* Set the width of the sidebar to 250px (show it) */
 function openNav() {
   document.getElementById("mySidepanel").style.width = "250px";
 }

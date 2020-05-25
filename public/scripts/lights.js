@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', () => {
       recognition.continuous = false                  //determines if continous results are captured or not
       recognition.interimResults = false              //determines if interim results should be returned or just final
       recognition.grammars = speechRecognitionList;   //add speech grammar list
-      recognition.lang = 'en-US';                     //set language - good practice
+      recognition.lang = 'en-GB';                     //set language - good practice
       recognition.maxAlternatives = 1;                //sets number of alternative potential matches that should be returned per result
 
       //function to start SpeechRecognition
