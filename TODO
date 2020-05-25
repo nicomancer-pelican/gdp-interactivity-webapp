@@ -1,10 +1,16 @@
 WEBAPP
-- add confirm button to webapp that needs to be actioned before the database is updated
+x add confirm button to webapp that needs to be actioned before the database is updated
+x fix confirm button
+x make confirm button disappear when retry is clicked
+- sort out keywords thing
+x get it to work on mobile
+- update help page (you may need to manually enter permission for the site)
 - add sound clips
+- display queue position
 - make your code a tad more readable
 - make it look pretty
 
 
 MATLAB
 - sort out loop
-- update database once manoeuvre is completed
+x create demo for commands

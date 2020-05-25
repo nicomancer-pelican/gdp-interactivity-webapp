@@ -6,25 +6,16 @@
 
 
     "commands": {
-      "one": {
-        "manoeuvre": "doughnut",
-        "completed": true
-      },
-      "two": {
-          "manoeuvre" : "triangle",
-          "completed" : true
-      },
-      "three": {
-          "manoeuvre" : "square",
-          "completed" : false
+      "uniqueID": {
+        "manoeuvre": "manoeuvre name"
       }
     },
 
 
     "lights": {
-      "1": "white",
-      "2": "green",
-      "3": "blue"
+      "uniqueID": {
+        "colour" : "colour"
     }
   }
+}
   

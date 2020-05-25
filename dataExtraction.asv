@@ -59,12 +59,12 @@ function square()
     close all;
 end
 
-function ellipse()
-    load('ellipse.mat')
+function doughnut()
+    load('doughnut.mat')
     figure; hold on;
     axis([-1,11,-1,11])
     grid on;
-    title('Ellipse manoeuvre')
+    title('Doughnut manoeuvre')
     for i=1:401
         plot(x(1:i),y(1:i),'--','color','k')
         pause(0.01)

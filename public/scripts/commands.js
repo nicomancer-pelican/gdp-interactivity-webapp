@@ -65,11 +65,11 @@ window.addEventListener('DOMContentLoaded', () => {
           var commandListRef = firebase.database().ref(dbRef)
           var newCommandRef = commandListRef.push();
           newCommandRef.set({
-            'manoeuvre' : text,
-            'complete' : false
+            'manoeuvre' : text
           })
 
           confirm.setAttribute('hidden', true)
+          result.textContent = ''
         })
       }
 
