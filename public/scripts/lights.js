@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
     //link buttons etc.
     const button = document.getElementById('button')
+    const confirm = document.getElementById('confirm')
     const result = document.getElementById('result')
     const main = document.getElementsByTagName('main')[0]
 
@@ -11,7 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // FIREBASE REALTIME DATABASE BITS AND BOBS
     var database = firebase.database();
-    var dbRef = firebase.database().ref('commands');
+    var dbRef = firebase.database().ref('lights');
 
     // GRAMMAR - define grammar the app should recognise
     // grammar format used is JSpeech Grammar Format (JSGF) - https://www.w3.org/TR/jsgf/
@@ -51,16 +52,23 @@ window.addEventListener('DOMContentLoaded', () => {
         console.log('recieved')
         result.innerHTML = ''
         button.textContent = 'click to retry'
+        confirm.removeAttribute('hidden')
         var text = event.results[0][0].transcript;
         result.textContent = 'Result received: ' + text + '.';
 
         console.log('Confidence: ' + event.results[0][0].confidence);
 
-        //add to database
-        var commandListRef = firebase.database().ref(dbRef)
-        var newCommandRef = commandListRef.push();
-        newCommandRef.set({
-          'manoeuvre' : text
+        //add to database if confirm button clicked
+        confirm.addEventListener('click', event => {
+          console.log('confirmed')
+
+          var commandListRef = firebase.database().ref(dbRef)
+          var newCommandRef = commandListRef.push();
+          newCommandRef.set({
+            'colour' : text
+          })
+
+          confirm.setAttribute('hidden', true)
         })
       }
 
