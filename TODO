@@ -5,7 +5,7 @@ x make confirm button disappear when retry is clicked
 - make "result recieved" thing disappear when retry is clicked
 x sort out keywords thing - not possible on chrome
 x get it to work on mobile
-- fix thing where multiple commands results in copying previous commands in database
+x fix thing where multiple commands results in copying previous commands in database
 - update help page (you may need to manually enter permission for the site)
 - add sound clips
 - display queue position

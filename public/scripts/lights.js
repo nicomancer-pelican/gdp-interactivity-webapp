@@ -70,6 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
           confirm.setAttribute('hidden', true)
           result.textContent = ''
+          window.location.reload();
         })
       }
 

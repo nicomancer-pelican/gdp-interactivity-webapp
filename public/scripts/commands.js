@@ -1,11 +1,11 @@
 window.addEventListener('DOMContentLoaded', () => {
-    //link buttons etc.
+    // LINK BUTTONS ETC.
     const button = document.getElementById('button')
     const confirm = document.getElementById('confirm')
     const result = document.getElementById('result')
     const main = document.getElementsByTagName('main')[0]
 
-    // CHROME SUPPORT
+    // CHROME SUPPORT - note: specific grammars currently not supported
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList
     const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent
@@ -14,9 +14,9 @@ window.addEventListener('DOMContentLoaded', () => {
     var database = firebase.database();
     var dbRef = firebase.database().ref('commands');
 
-    // GRAMMAR - define grammar the app should recognise
+    // GRAMMAR - define grammar the app should recognise (currently not supported)
     // grammar format used is JSpeech Grammar Format (JSGF) - https://www.w3.org/TR/jsgf/
-    var keywords = ['doughnut' , 'square' , 'triangle'];
+    var keywords = ['doughnut' , 'square' , 'triangle', 'figure of eight'];
     var grammar = '#JSGF V1.0; grammar keywords; public <keywords> = ' + keywords.join(' | ') + ' ;'
 
     // DEFINE SPEECH RECOGNITION INSTANCE (or display that browser in not compatible)
@@ -27,11 +27,11 @@ window.addEventListener('DOMContentLoaded', () => {
       var speechRecognitionList = new SpeechGrammarList();    //new grammar list to contain grammar
       speechRecognitionList.addFromString(grammar, 1);        //add grammar - optional weight value from 0 to 1
 
-      recognition.continuous = false                  //determines if continous results are captured or not
-      recognition.interimResults = false              //determines if interim results should be returned or just final
-      recognition.grammars = speechRecognitionList;   //add speech grammar list
-      recognition.lang = 'en-GB';                     //set language - good practice
-      recognition.maxAlternatives = 1;                //sets number of alternative potential matches that should be returned per result
+      recognition.continuous = false                          //determines if continous results are captured or not
+      recognition.interimResults = false                      //determines if interim results should be returned or just final
+      recognition.grammars = speechRecognitionList;           //add speech grammar list
+      recognition.lang = 'en-GB';                             //set language - good practice
+      recognition.maxAlternatives = 1;                        //sets number of alternative potential matches that should be returned per result
 
       //function to start SpeechRecognition
       const start = () => {
@@ -68,7 +68,8 @@ window.addEventListener('DOMContentLoaded', () => {
             'manoeuvre' : text
           })
 
-          confirm.setAttribute('hidden', true)
+          //confirm.setAttribute('hidden', true)
+          window.location.reload();
         })
       }
 
