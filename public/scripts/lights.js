@@ -58,6 +58,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
         console.log('Confidence: ' + event.results[0][0].confidence);
 
+        //click to retry button
+        button.addEventListener('click', event => {
+          confirm.style.display = 'none'
+          result.textContent = ''
+        })
+
         //add to database if confirm button clicked
         confirm.addEventListener('click', event => {
           console.log('confirmed')
@@ -67,9 +73,6 @@ window.addEventListener('DOMContentLoaded', () => {
           newCommandRef.set({
             'colour' : text
           })
-
-          confirm.setAttribute('hidden', true)
-          result.textContent = ''
           window.location.reload();
         })
       }

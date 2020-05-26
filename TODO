@@ -2,7 +2,7 @@ WEBAPP
 x add confirm button to webapp that needs to be actioned before the database is updated
 x fix confirm button
 x make confirm button disappear when retry is clicked
-- make "result recieved" thing disappear when retry is clicked
+x make "result recieved" thing disappear when retry is clicked
 x sort out keywords thing - not possible on chrome
 x get it to work on mobile
 x fix thing where multiple commands results in copying previous commands in database
