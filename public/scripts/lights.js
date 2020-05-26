@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         //click to retry button
         button.addEventListener('click', event => {
-          confirm.style.display = 'none'
+          confirm.setAttribute('hidden','true')
           result.textContent = ''
         })
 

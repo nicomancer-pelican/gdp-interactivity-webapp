@@ -63,22 +63,20 @@ function colour(dataURL)
                     set(h,'facecolor',[0.6350 0.0780 0.1840])
                     pause(2)
                 case {'orange','Orange'}
-                    set(h,'facecolor',[0.8500 0.3250 0.0980])
                     pause(2)
+                    set(h, 'facecolour',[0.8500 0.3250 0.0980])
                 case {'yellow','Yellow'}
                     set(h,'facecolor',[0.9290 0.6940 0.1250])
                     pause(2)
                 case {'green','Green'}
-                    set(h,'facecolor',[0.4660 0.6740 0.1880])
+                    set(h,'facecolour',
                     pause(2)
                 case {'blue','Blue'}
-                    set(h,'facecolor',[0 0.4470 0.7410])
+                    set(h, 'facecolor',[0 0.4470 0.7410])
                     pause(2)
                 case {'purple','Purple'}
-                    set(h,'facecolor',[0.4940 0.1840 0.5560])
                     pause(2)
                 case {'white','White'}
-                    set(h,'facecolor',[1 1 1])
                     pause(2)
                 otherwise
                     disp('error: invalid colour')
