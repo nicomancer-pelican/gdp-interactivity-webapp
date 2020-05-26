@@ -2,7 +2,8 @@
     "interactions": {
       "commands": null,
       "lights": null,
-      "sounds":null
+      "sounds":null,
+      "reports": null
     },
 
 
@@ -22,6 +23,12 @@
   "sounds": {
     "uniqueID": {
       "track" : "track no."
+    }
+  },
+
+  "reports": {
+    "uniqueID": {
+      "problem" : "description"
     }
   }
 }
