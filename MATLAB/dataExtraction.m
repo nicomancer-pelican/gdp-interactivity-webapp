@@ -7,7 +7,8 @@ clear; clc;
 dataURL = 'https://airship-a31a9.firebaseio.com/.json';
 
 % command(dataURL);
-colour(dataURL);
+% colour(dataURL);
+sounds(dataURL);
 %% COMMAND FUNCTION
 function command(dataURL)
     i = 1;
@@ -89,7 +90,46 @@ function colour(dataURL)
     end
 end
 
-%% Functions for commands demo
+%% SOUND FUNCTION
+function sounds(dataURL)
+    i = 1;
+    T1 = audioread('./audio/T1.mp3');
+    T2 = audioread('./audio/T2.mp3');
+    T3 = audioread('./audio/T3.mp3');
+    T4 = audioread('./audio/T4.mp3');
+    while true
+        data = webread(dataURL);
+        uniqueID = fieldnames(data.sounds);
+        queue = size(uniqueID);
+        upperLim = queue(1);
+
+        if i < upperLim
+            current = char(uniqueID(i));  %get the uniqueID of the current command
+            track = data.sounds.(current).track;  %current manoeuvre
+
+            switch track
+                case {'T1'}
+                    sound(T1,44000)
+                    pause(8)
+                case {'T2'}
+                    sound(T2,44000)
+                    pause(7)
+                case {'T3'}
+                    sound(T3,44000)
+                    pause(6)
+                case {'T4'}
+                    sound(T4,44000)
+                    pause(6)
+                otherwise
+                    disp('error in sound options')
+            end
+            i = i + 1;
+        end
+        pause(1)
+    end
+end
+
+%% Extra functions for commands demo
 function triangle()
     load('triangle.mat')
     figure; hold on;

@@ -7,7 +7,9 @@ x sort out keywords thing - not possible on chrome
 x get it to work on mobile
 x fix thing where multiple commands results in copying previous commands in database
 - update help page (you may need to manually enter permission for the site)
+- update home page
 - add sound clips
+- report a problem page
 - display queue position
 x custom 404 page
 - make your code a tad more readable
