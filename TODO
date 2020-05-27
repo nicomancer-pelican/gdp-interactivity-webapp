@@ -9,7 +9,7 @@ x fix thing where multiple commands results in copying previous commands in data
 x update help page (you may need to manually enter permission for the site)
 x update home page
 x add sound clips
-- report a problem page
+x report a problem page
 - display queue position
 x custom 404 page
 - make your code a tad more readable

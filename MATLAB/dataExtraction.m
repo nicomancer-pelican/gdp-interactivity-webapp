@@ -12,6 +12,10 @@ sounds(dataURL);
 %% COMMAND FUNCTION
 function command(dataURL)
     i = 1;
+    figure; hold on;
+    axis([-1,11,-1,11])
+    grid on;
+    title('Manoeuvre')
     while true
         data = webread(dataURL);
         uniqueID = fieldnames(data.commands);
@@ -49,6 +53,7 @@ function colour(dataURL)
     grid on;
     title('LED Colour')
     h = area([0,1],[1,1]);
+    set(h,'facecolor',[1 1 1])
     while true
         data = webread(dataURL);
         uniqueID = fieldnames(data.lights);
@@ -132,44 +137,29 @@ end
 %% Extra functions for commands demo
 function triangle()
     load('triangle.mat')
-    figure; hold on;
-    axis([-1,11,-1,11])
-    grid on;
-    title('Triangle manoeuvre')
     for i=1:300
-        plot(x(1:i),y(1:i),'--','color','k')
+        h(i) = plot(x(1:i),y(1:i),'--','color','k');
         pause(0.03)
     end
-    pause(0.1)
-    close all;
+    delete(h);
 end
 
 function square()
     load('square.mat')
-    figure; hold on;
-    axis([-1,11,-1,11])
-    grid on;
-    title('Square manoeuvre')
     for i=1:401
-        plot(x(1:i),y(1:i),'--','color','k')
-        pause(0.01)
+        h(i) = plot(x(1:i),y(1:i),'--','color','k');
+        pause(0.03)
     end
-    pause(0.1)
-    close all;
+    delete(h);
 end
 
 function ellipse()
     load('ellipse.mat')
-    figure; hold on;
-    axis([-1,11,-1,11])
-    grid on;
-    title('Ellipse manoeuvre')
     for i=1:401
-        plot(x(1:i),y(1:i),'--','color','k')
-        pause(0.01)
+        h(i) = plot(x(1:i),y(1:i),'--','color','k');
+        pause(0.03)
     end
-    pause(0.1)
-    close all;
+    delete(h);
 end
 
 
