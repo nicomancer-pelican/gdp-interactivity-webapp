@@ -8,7 +8,7 @@ dataURL = 'https://airship-a31a9.firebaseio.com/.json';
 
 % command(dataURL);
 % colour(dataURL);
-sounds(dataURL);
+% sounds(dataURL);
 %% COMMAND FUNCTION
 function command(dataURL)
     i = 1;
