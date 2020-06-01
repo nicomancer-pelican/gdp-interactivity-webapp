@@ -1,0 +1,75 @@
+<!DOCTYPE html><html>
+<title> Joystick </title>
+<body>
+    <div id="help" style="position:fixed; left:40%; top:4%; color:grey;">
+        virtualjoystick.js Changing smthig
+    </div>
+
+    <div id="debug1" style="position:fixed; left:5%; top:10%; color:grey;">
+        Debug Info
+    </div>
+
+    <div id="debug2" style="position:fixed; left:5%; top:14%; color:grey;">
+        Debug Info
+    </div>
+
+    <div id="debug3" style="position:fixed; left:5%; top:18%; color:grey;">
+        Debug Info
+    </div>
+
+    <div id="debug4" style="position:fixed; left:5%; top:22%; color:grey;">
+        Debug Info
+    </div>
+
+    <script src="http://threejs.org/build/three.min.js"></script>
+    <script src="http://jeromeetienne.github.io/threex.keyboardstate/threex.keyboardstate.js"></script>
+    <script src="virtualjoystick.js"></script>
+    <script>
+
+        var scene = new THREE.Scene();
+        var clock = new THREE.Clock();
+
+        var keyboard = new THREEx.KeyboardState();
+        var joystick = new VirtualJoystick({
+            mouseSupport: true,
+            limitStickTravel: true,
+            stickRadius: 50,
+            strokeStyle: 'yellow'
+        });
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var debugText1 = document.getElementById("debug1");
+        var debugText2 = document.getElementById("debug2");
+        var angleText = document.getElementById("debug3");
+        var amplitude = document.getElementById("debug4");
+
+        var ang = 0;
+        var amp = 0;
+        var dx = 0;
+        var dy = 0;
+
+        animate();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            dx = joystick.deltaX().toFixed(2);
+            dy = joystick.deltaY().toFixed(2);
+
+            debugText1.innerHTML = "Change in position X: " + dx;
+            debugText2.innerHTML = "Change in position Y: " + dy;
+            if (dx == 0) {
+                ang = 0;
+            } else {
+                ang = Math.atan(dy / dx) / Math.PI * 180;
+            }
+            angleText.innerHTML = "Angle: " + ang.toFixed(2);
+            amp = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
+            amplitude.innerHTML = "Amplitude: " + amp.toFixed(2);
+        }
+
+    </script>
+</body>
+</html>
