@@ -12,7 +12,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // FIREBASE REALTIME DATABASE BITS AND BOBS
     var database = firebase.database();
-    var dbRef = firebase.database().ref('commands');
+    var dbRef = firebase.database().ref();
+    var cmRef = firebase.database().ref('commands');
 
     // GRAMMAR - define grammar the app should recognise (currently not supported)
     // grammar format used is JSpeech Grammar Format (JSGF) - https://www.w3.org/TR/jsgf/
@@ -66,16 +67,38 @@ window.addEventListener('DOMContentLoaded', () => {
 
         //add to database if confirm button clicked
         confirm.addEventListener('click', event => {
-          console.log('confirmed')
+          var commands = {};
+          var manoeuvre = text;
+          var complete = false;
+          var i = 1;
+          var no = {i}
+          var y = toString(i)
 
-          var commandListRef = firebase.database().ref(dbRef)
-          var newCommandRef = commandListRef.push();
-          newCommandRef.set({
-            'manoeuvre' : text
-          })
+          //while(i<100){
+            //pull data from database - cpRef is reference to complete
+            var cpRef = firebase.database().ref('commands').child('1').child('complete')
+            var pull
+            cpRef.on('value', function(snapshot){
+              pull = snapshot.val();
+              console.log(pull)
+            })
+            //i = i + 1;
+          //}
+          
 
-          //confirm.setAttribute('hidden', true)
-          window.location.reload();
+          /*while(i<100) {
+            dbRef.once
+            if(commands[i].complete == true){
+              commands[i] = {manoeuvre, complete};  //set data
+              dbRef.set({commands});                //push to database
+              console.log('confirmed')
+              break;
+            }
+            i = i + 1;
+          };*/
+          
+
+          //window.location.reload();
         })
       }
 

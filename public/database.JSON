@@ -1,15 +1,16 @@
 {
-    "interactions": {
-      "commands": null,
-      "lights": null,
-      "sounds":null,
-      "reports": null
+    "interactions" : {
+      "commands" : null,
+      "lights" : null,
+      "sounds" : null,
+      "reports" : null
     },
 
 
     "commands": {
-      "uniqueID": {
-        "manoeuvre": "manoeuvre name"
+      "1" : {
+        "manoeuvre" : "test",
+        "complete" : true
       }
     },
 
