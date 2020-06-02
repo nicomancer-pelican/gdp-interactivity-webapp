@@ -71,32 +71,30 @@ window.addEventListener('DOMContentLoaded', () => {
           var manoeuvre = text;
           var complete = false;
           var i = 1;
-          var no = {i}
-          var y = toString(i)
+          var y = toString(i);
 
-          //while(i<100){
+          while(i<6){
+            var hello = `${i}`;  //must be string interpolation denoted with tickmarks ``
             //pull data from database - cpRef is reference to complete
-            var cpRef = firebase.database().ref('commands').child('1').child('complete')
-            var pull
-            cpRef.on('value', function(snapshot){
+            var cpRef = firebase.database().ref('commands').child(hello).child('complete')
+            var pull  //define outside of snapshot function - maybe can define inside?
+            console.log(i)
+            
+            cpRef.once('value', function(snapshot){
               pull = snapshot.val();
+            }).then(function(){
               console.log(pull)
-            })
-            //i = i + 1;
-          //}
-          
 
-          /*while(i<100) {
-            dbRef.once
-            if(commands[i].complete == true){
-              commands[i] = {manoeuvre, complete};  //set data
-              dbRef.set({commands});                //push to database
-              console.log('confirmed')
-              break;
-            }
+              var noRef = firebase.database().ref('commands').child(hello)
+              if(pull === null){
+                commands[i] = {manoeuvre, complete};  //set data
+                noRef.set({commands});                //push to database
+                console.log('confirmed')
+                return;
+              }
+            })
             i = i + 1;
-          };*/
-          
+          }
 
           //window.location.reload();
         })

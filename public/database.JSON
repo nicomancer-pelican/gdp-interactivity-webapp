@@ -11,6 +11,10 @@
       "1" : {
         "manoeuvre" : "test",
         "complete" : true
+      },
+      "2" : {
+        "manoeuvre" : "another test",
+        "complete" : false
       }
     },
 
