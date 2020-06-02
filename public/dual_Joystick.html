@@ -1,0 +1,162 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <title>DualJoy</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <style>
+        html, body {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        #left {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        #right {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            background: rgba(0, 0, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="left">
+        <div id="left1" style="position:fixed; left:5%; top:10%; color:grey;">
+            Debug Info
+        </div>
+
+        <div id="left2" style="position:fixed; left:5%; top:14%; color:grey;">
+            Debug Info
+        </div>
+
+        <div id="left3" style="position:fixed; left:5%; top:18%; color:grey;">
+            Debug Info
+        </div>
+
+        <div id="left4" style="position:fixed; left:5%; top:22%; color:grey;">
+            Debug Info
+        </div>
+    </div>
+    <div id="right">
+        <div id="right1" style="position:fixed; left:60%; top:10%; color:grey;">
+            Debug Info
+        </div>
+
+        <div id="right2" style="position:fixed; left:60%; top:14%; color:grey;">
+            Debug Info
+        </div>
+
+        <div id="right3" style="position:fixed; left:60%; top:18%; color:grey;">
+            Debug Info
+        </div>
+
+        <div id="right4" style="position:fixed; left:60%; top:22%; color:grey;">
+            Debug Info
+        </div>
+    </div>
+    <script src="virtualjoystick.js"></script>
+    <script>
+        console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+
+        var joystickR = new VirtualJoystick({
+            container: document.body.left,
+            strokeStyle: 'purple',
+            limitStickTravel: true,
+            stickRadius: 50
+        });
+
+        joystickR.addEventListener('touchStartValidation', function (event) {
+            var touch = event.changedTouches[0];
+            if (touch.pageX < window.innerWidth / 2) return false;
+            return true
+        });
+
+        var joystickL = new VirtualJoystick({
+            container: document.body.right,
+            strokeStyle: 'green',
+            limitStickTravel: true,
+            stickRadius: 50
+        });
+
+        joystickL.addEventListener('touchStartValidation', function (event) {
+            var touch = event.changedTouches[0];
+            if (touch.pageX >= window.innerWidth / 2) return false;
+            return true
+        });
+
+        joystickL.addEventListener('touchStart', function () {
+            console.log('fire')
+        })
+        joystickR.addEventListener('touchStart', function () {
+            console.log('fire')
+        })
+
+        document.addEventListener("touchmove", function (e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        var dxText1L = document.getElementById("left1");
+        var dyText2L = document.getElementById("left2");
+        var angleTextL = document.getElementById("left3");
+        var amplitudeL = document.getElementById("left4");
+
+        var dxText1R = document.getElementById("right1");
+        var dyText2R = document.getElementById("right2");
+        var angleTextR = document.getElementById("right3");
+        var amplitudeR = document.getElementById("right4");
+
+        var ang = 0;
+        var amp = 0;
+        var dx = 0;
+        var dy = 0;
+
+        animate();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            dx = joystickL.deltaX().toFixed(2);
+            dy = -joystickL.deltaY().toFixed(2);
+
+            dxText1L.innerHTML = "Change in position X: " + dx;
+            dyText2L.innerHTML = "Change in position Y: " + dy;
+            if (dx == 0) {
+                ang = 0;
+            } else {
+                ang = Math.atan(dy / dx) / Math.PI * 180;
+            }
+            angleTextL.innerHTML = "Angle: " + ang.toFixed(2);
+            amp = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
+            amplitudeL.innerHTML = "Amplitude: " + amp.toFixed(2);
+    
+            dx = joystickR.deltaX().toFixed(2);
+            dy = -joystickR.deltaY().toFixed(2);
+
+            dxText1R.innerHTML = "Change in position X: " + dx;
+            dyText2R.innerHTML = "Change in position Y: " + dy;
+            if (dx == 0) {
+                ang = 0;
+            } else {
+                ang = Math.atan(dy / dx) / Math.PI * 180;
+            }
+            angleTextR.innerHTML = "Angle: " + ang.toFixed(2);
+            amp = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
+            amplitudeR.innerHTML = "Amplitude: " + amp.toFixed(2);
+        }
+
+    </script>
+</body>
+</html>
