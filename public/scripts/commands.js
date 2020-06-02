@@ -67,33 +67,45 @@ window.addEventListener('DOMContentLoaded', () => {
 
         //add to database if confirm button clicked
         confirm.addEventListener('click', event => {
-          var commands = {};
-          var manoeuvre = text;
-          var complete = false;
+          var exit = false;
           var i = 1;
-          var y = toString(i);
-
-          var hello = `${i}`;  //must be string interpolation denoted with tickmarks ``
-          //pull data from database - cpRef is reference to complete
-          var cpRef = firebase.database().ref('commands').child(hello).child('complete')
-          var noRef = firebase.database().ref('commands').child(hello)
-          var pull  //define outside of snapshot function - maybe can define inside?
-
-          cpRef.once('value', function(snapshot){
-            pull = snapshot.val()
-            console.log(i)
-          }).then(function(){
-            console.log(pull)
-            if(pull === null){
-              commands[i] = {manoeuvre, complete};  //set data
-              noRef.set({commands});                //push to database
-              console.log('confirmed')
-            } else{
-              i = i + 1;
+          
+          while(i<5){
+            var hello = `${i}`;  //must be string interpolation denoted with tickmarks ``
+            getData(hello, i, text, exit);
+            if(exit === true){
+              return
+            }else{
+              i = i+1;
             }
-          })
+          }
 
           //window.location.reload();
+        })
+      }
+
+      // GET DATA FUNCTION
+      function getData(hello, i, text, exit){
+        //pull data from database - cpRef is reference to complete
+        var cpRef = firebase.database().ref('commands').child(hello).child('complete')
+        var noRef = firebase.database().ref('commands').child(hello)
+        var pull  //define outside of snapshot function - maybe can define inside?
+
+        cpRef.once('value', function(snapshot){
+          
+          pull = snapshot.val()
+          console.log(i)
+        }).then(function(){
+          
+          console.log(pull)
+          if(pull === null){
+            noRef.set({
+              "manoeuvre" : text,
+              "complete" : false
+            });
+            console.log('confirmed')
+            exit = true
+          }
         })
       }
 
