@@ -73,28 +73,25 @@ window.addEventListener('DOMContentLoaded', () => {
           var i = 1;
           var y = toString(i);
 
-          while(i<6){
-            var hello = `${i}`;  //must be string interpolation denoted with tickmarks ``
-            //pull data from database - cpRef is reference to complete
-            var cpRef = firebase.database().ref('commands').child(hello).child('complete')
-            var pull  //define outside of snapshot function - maybe can define inside?
-            console.log(i)
-            
-            cpRef.once('value', function(snapshot){
-              pull = snapshot.val();
-            }).then(function(){
-              console.log(pull)
+          var hello = `${i}`;  //must be string interpolation denoted with tickmarks ``
+          //pull data from database - cpRef is reference to complete
+          var cpRef = firebase.database().ref('commands').child(hello).child('complete')
+          var noRef = firebase.database().ref('commands').child(hello)
+          var pull  //define outside of snapshot function - maybe can define inside?
 
-              var noRef = firebase.database().ref('commands').child(hello)
-              if(pull === null){
-                commands[i] = {manoeuvre, complete};  //set data
-                noRef.set({commands});                //push to database
-                console.log('confirmed')
-                return;
-              }
-            })
-            i = i + 1;
-          }
+          cpRef.once('value', function(snapshot){
+            pull = snapshot.val()
+            console.log(i)
+          }).then(function(){
+            console.log(pull)
+            if(pull === null){
+              commands[i] = {manoeuvre, complete};  //set data
+              noRef.set({commands});                //push to database
+              console.log('confirmed')
+            } else{
+              i = i + 1;
+            }
+          })
 
           //window.location.reload();
         })
