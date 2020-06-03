@@ -67,14 +67,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
         //add to database if confirm button clicked
         confirm.addEventListener('click', event => {
-          var i = 3;
-          var hello = `${i}`;
-          var cpRef = firebase.database().ref('commands').child(hello).child('complete')
           var pull
 
           // pull data i
-          var pullData = new Promise(
-            function(resolve,reject){
+          var pullData = i => new Promise(
+            function(resolve){
+              var hello = `${i}`;
+              var cpRef = firebase.database().ref('commands').child(hello).child('complete')
               cpRef.once('value', function(snapshot){
                 pull = snapshot.val();
               })
@@ -85,46 +84,48 @@ window.addEventListener('DOMContentLoaded', () => {
             }
           )
 
-          //check value of pull - is it equal to null?
-          var checkNull = function(pull){
-            if(pull === null){
-              exit = true;
-              return Promise.resolve(exit);
-            } else{
-              exit = false;
-              return Promise.resolve(exit);
-            }
-          }
-
           //function to increment queue or push to update database
-          var queue = function(exit){
-            if(exit === false){
-              i = i + 1;
-              return Promise.resolve(`incremented queue position to ${i}`);
-            } else if(exit === true){
-              var noRef = firebase.database().ref('commands').child(hello);
-              noRef.set({
-                "manoeuvre" : text,
-                "complete" : false
-              });
-              return Promise.resolve('data sent to database');
-            }
+          var pushData = function(i){
+            var hello = `${i}`;
+            var noRef = firebase.database().ref('commands').child(hello);
+            noRef.set({
+              "manoeuvre" : text,
+              "complete" : false
+            });
+            var message = 'data sent to database'
+            return Promise.resolve(message);
           }
 
           //function to call promise
-          var updateData = function(){
-            pullData
-            .then(checkNull)
-            .then(queue)
+          var updateData = function(i){
+            pullData(i)
+            //.then(checkNull)
+            //.then(queue)
             .then(function (fulfilled){
               console.log(fulfilled);
             })
           }
 
-          //call promise
-          updateData();
+          //updateData();
 
-          //window.location.reload();
+          //call promise
+          const loop = function(value){
+            pullData(value).then(complete => {
+              if (complete != null){
+                console.log(`value of complete: ${complete}`)
+                return loop(value + 1)
+              } else {
+                console.log(`value of complete: ${complete}`)
+                pushData(value).then(message => {
+                  console.log(message)
+                  window.location.reload();
+                })
+              }
+            })
+          }
+
+          loop(1);
+
         })
       }
 
