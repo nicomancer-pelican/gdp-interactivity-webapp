@@ -67,45 +67,64 @@ window.addEventListener('DOMContentLoaded', () => {
 
         //add to database if confirm button clicked
         confirm.addEventListener('click', event => {
-          var exit = false;
-          var i = 1;
-          
-          while(i<5){
-            var hello = `${i}`;  //must be string interpolation denoted with tickmarks ``
-            getData(hello, i, text, exit);
-            if(exit === true){
-              return
-            }else{
-              i = i+1;
+          var i = 3;
+          var hello = `${i}`;
+          var cpRef = firebase.database().ref('commands').child(hello).child('complete')
+          var pull
+
+          // pull data i
+          var pullData = new Promise(
+            function(resolve,reject){
+              cpRef.once('value', function(snapshot){
+                pull = snapshot.val();
+              })
+              .then(function(){
+                console.log(`pulling from queue position ${i}`)
+                resolve(pull)
+              })
+            }
+          )
+
+          //check value of pull - is it equal to null?
+          var checkNull = function(pull){
+            if(pull === null){
+              exit = true;
+              return Promise.resolve(exit);
+            } else{
+              exit = false;
+              return Promise.resolve(exit);
             }
           }
 
-          //window.location.reload();
-        })
-      }
-
-      // GET DATA FUNCTION
-      function getData(hello, i, text, exit){
-        //pull data from database - cpRef is reference to complete
-        var cpRef = firebase.database().ref('commands').child(hello).child('complete')
-        var noRef = firebase.database().ref('commands').child(hello)
-        var pull  //define outside of snapshot function - maybe can define inside?
-
-        cpRef.once('value', function(snapshot){
-          
-          pull = snapshot.val()
-          console.log(i)
-        }).then(function(){
-          
-          console.log(pull)
-          if(pull === null){
-            noRef.set({
-              "manoeuvre" : text,
-              "complete" : false
-            });
-            console.log('confirmed')
-            exit = true
+          //function to increment queue or push to update database
+          var queue = function(exit){
+            if(exit === false){
+              i = i + 1;
+              return Promise.resolve(`incremented queue position to ${i}`);
+            } else if(exit === true){
+              var noRef = firebase.database().ref('commands').child(hello);
+              noRef.set({
+                "manoeuvre" : text,
+                "complete" : false
+              });
+              return Promise.resolve('data sent to database');
+            }
           }
+
+          //function to call promise
+          var updateData = function(){
+            pullData
+            .then(checkNull)
+            .then(queue)
+            .then(function (fulfilled){
+              console.log(fulfilled);
+            })
+          }
+
+          //call promise
+          updateData();
+
+          //window.location.reload();
         })
       }
 
