@@ -63,11 +63,31 @@ window.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', event => {
           confirm.setAttribute('hidden','true')
           result.textContent = ''
+          window.location.reload();
         })
 
         //add to database if confirm button clicked
         confirm.addEventListener('click', event => {
           var pull
+
+          // find position i near the end to go a bit faster
+          var findPos = new Promise(
+            function(resolve){
+              var incoming
+              var temp
+              var key
+              var endRef = firebase.database().ref('commands').limitToLast(1)
+              endRef.once('value', function(snapshot){
+                incoming = snapshot.val();
+              })
+              .then(function(){
+                temp = Object.keys(incoming)
+                key = parseInt(temp[0])
+                console.log(`key retrieved: ${key}`)
+                resolve(key)
+              })
+            }
+          )
 
           // pull data i
           var pullData = i => new Promise(
@@ -78,7 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 pull = snapshot.val();
               })
               .then(function(){
-                console.log(`pulling from queue position ${i}`)
+                //console.log(`pulling from queue position ${i}`)
                 resolve(pull)
               })
             }
@@ -96,36 +116,31 @@ window.addEventListener('DOMContentLoaded', () => {
             return Promise.resolve(message);
           }
 
-          //function to call promise
-          var updateData = function(i){
-            pullData(i)
-            //.then(checkNull)
-            //.then(queue)
-            .then(function (fulfilled){
-              console.log(fulfilled);
-            })
-          }
-
-          //updateData();
-
-          //call promise
+          //call promise sequence
           const loop = function(value){
             pullData(value).then(complete => {
               if (complete != null){
-                console.log(`value of complete: ${complete}`)
                 return loop(value + 1)
               } else {
-                console.log(`value of complete: ${complete}`)
                 pushData(value).then(message => {
                   console.log(message)
-                  window.location.reload();
+                  console.log(`Queue position: ${value}`)
+                  confirm.setAttribute('hidden','true')
+                  result.textContent = `Queue position: ${value}`
                 })
               }
             })
           }
 
-          loop(1);
+          // find starting queue number then run loop()
+          const start = function(){
+            findPos.then(i => {
+              loop(i)
+            })
+          }
 
+          start();
+          
         })
       }
 
