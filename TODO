@@ -11,6 +11,12 @@ x update home page
 x add sound clips
 x report a problem page
 - display queue position
+- remove lights page
+- remove sounds page
+- add Remote Control page
+- add an info page with project info etc.
+- fix the stupid event listener thing
+- set which functionalities are available
 x custom 404 page
 - make your code a tad more readable
 - make it look pretty
@@ -19,3 +25,6 @@ x custom 404 page
 MATLAB
 x sort out loop
 x create demo for commands
+- pull data functions
+- update complete bit on database when action is done
+- set which functionalities are available
