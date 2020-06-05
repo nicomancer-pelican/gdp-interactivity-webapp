@@ -22,8 +22,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-  
   // DEFINE SPEECH RECOGNITION INSTANCE (or display that browser in not compatible)
   if (typeof SpeechRecognition !== 'undefined') {
     const recognition = new SpeechRecognition()             //new instance
@@ -38,9 +36,6 @@ window.addEventListener('DOMContentLoaded', () => {
     recognition.maxAlternatives = 1;                        //sets number of alternative potential matches that should be returned per result
 
 
-    /*////////////////////////////////////////////////////////////////////////////////////////////
-      FUNCTIONS
-    ////////////////////////////////////////////////////////////////////////////////////////////*/
 
     // START LISTENING - function to start SpeechRecognition
     const start = () => {
@@ -64,13 +59,13 @@ window.addEventListener('DOMContentLoaded', () => {
       window.location.reload();               //reload window - work around for the multiple event listeners of recognition being created for some reason
     }
     
-
     // RESULT - function for when result is received
     const onResult = event => {
       console.log('recieved')
       button.textContent = 'click to retry'
       console.log('Confidence: ' + event.results[0][0].confidence);
 
+      // function to set the value of the variable 'text' to be the voice input
       const setText = function(){
         var text = event.results[0][0].transcript;
         confirm.removeAttribute('hidden')
@@ -79,9 +74,9 @@ window.addEventListener('DOMContentLoaded', () => {
       }
       var text = setText()
 
-      //add to database if confirm button clicked
+      // add to database if confirm button clicked
       confirm.addEventListener('click', event => {
-        var pull
+        var pull  //variable to contain data pulled from the database
 
         // find position i near the end to go a bit faster
         const findPos = function(){
@@ -106,8 +101,8 @@ window.addEventListener('DOMContentLoaded', () => {
         // pull data from position i
         const pullData = function(i){
           return new Promise(function(resolve){
-            var hello = `${i}`;
-            var cpRef = firebase.database().ref('commands').child(hello).child('complete')
+            var queue = `${i}`; //current position in the database (equal to the value of the key)
+            var cpRef = firebase.database().ref('commands').child(queue).child('complete')
 
             cpRef.once('value', function(snapshot){
               pull = snapshot.val();
@@ -119,11 +114,11 @@ window.addEventListener('DOMContentLoaded', () => {
           })
         }
 
-        //function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
+        // function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
         const pushData = function(i){
           return new Promise(function(resolve){
-            var hello = `${i}`;
-            var noRef = firebase.database().ref('commands').child(hello);
+            var queue = `${i}`;
+            var noRef = firebase.database().ref('commands').child(queue);
             noRef.set({
               "manoeuvre" : text,
               "complete" : false
@@ -133,9 +128,9 @@ window.addEventListener('DOMContentLoaded', () => {
           })
         }
 
-        //call promise sequence
+        // call promise sequence
         const loop = function(value){
-          complete = pullData(value)
+          complete = pullData(value)  //complete is the value of the 'complete' key so either true, false or null
           .then(complete => {
             if (complete != null){
               return loop(value + 1)
@@ -144,20 +139,19 @@ window.addEventListener('DOMContentLoaded', () => {
                 console.log(message)
                 console.log(`Queue position: ${value}`)
                 confirm.setAttribute('hidden','true')
-                result.textContent = `Queue position: ${value}`
+                result.textContent = `Key value: ${value}`
                 return
               })
             }
           })
         }
 
+        // run promises
         findPos()
           .then(function(value){
-            console.log(`the resolved value is called key and has value ${value}`)
             return value
           })
           .then((value) => {
-            console.log(`the resolved value is called pull and has value ${value}`)
             return value
           }).then((value) => {
             loop(value)
@@ -165,7 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
       })
     }
 
-    //what to execute
+    //recognition even listener - it's a right pain and won't end properly hence the window reload when retry is clicked
     recognition.addEventListener('result', onResult, false)
 
     // start and stop listening button
@@ -179,8 +173,6 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     })
     
-
-
 
 
 
