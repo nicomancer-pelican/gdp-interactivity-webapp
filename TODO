@@ -15,7 +15,7 @@ x report a problem page
 - remove sounds page
 - add Remote Control page
 - add an info page with project info etc.
-- fix the stupid event listener thing
+x fix the stupid event listener thing
 - set which functionalities are available
 x custom 404 page
 - make your code a tad more readable
