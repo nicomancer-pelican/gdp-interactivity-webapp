@@ -6,7 +6,7 @@
 clear; clc;
 dataURL = 'https://airship-a31a9.firebaseio.com/.json';
 
-% command(dataURL);
+ command(dataURL);
 % colour(dataURL);
 % sounds(dataURL);
 %% COMMAND FUNCTION
