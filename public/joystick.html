@@ -41,8 +41,8 @@
               <a href="report.html"><i class="material-icons">feedback</i> Report</a>
           </div>
 
-          <div id="left"></div>
-          <div id="right"></div>
+          <div id=left></div>
+          <div id=right></div>
 
               <button class="openbtn" onclick="openNav()">&#9776; </button>
 
@@ -63,8 +63,8 @@
 
               joystickR.addEventListener('touchStartValidation', function (event) {
                   var touch = event.changedTouches[0];
-                  if (touch.pageX < window.innerWidth / 2) return false;
-                  return true
+                  if (touch.pageX < window.innerWidth / 2 & touch.pageY > 80) return true;
+                  return false
               });
 
               var joystickL = new VirtualJoystick({
@@ -76,8 +76,8 @@
 
               joystickL.addEventListener('touchStartValidation', function (event) {
                   var touch = event.changedTouches[0];
-                  if (touch.pageX >= window.innerWidth / 2) return false;
-                  return true
+                  if (touch.pageX >= window.innerWidth / 2 & touch.pageY > 80) return true;
+                  return false
               });
 
               joystickL.addEventListener('touchStart', function () {
