@@ -8,22 +8,36 @@
     <!-- Load an icon library -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
+      header {
+            margin-bottom: 0;
+        }
+        main {
+            position: relative;
+            flex-grow: 2;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 12px;
+            margin-bottom: 0;
+            margin-top: 0;
+            padding-top: 0;
+
+            text-align: center;
+        }
         #left {
             position: absolute;
             left: 0;
-            top: 5em;
+            top: 0;
             height: 100%;
             width: 50%;
-            background: rgba(148, 148, 148, 0.5);
+            
         }
 
         #right {
             position: absolute;
             right: 0;
-            top: 5em;
+            top: 0;
             height: 100%;
             width: 50%;
-            background: rgba(158, 158, 158,0.2);
         }
     </style>
   </head>
@@ -41,8 +55,6 @@
               <a href="report.html"><i class="material-icons">feedback</i> Report</a>
           </div>
 
-          <div id=left></div>
-          <div id=right></div>
 
               <button class="openbtn" onclick="openNav()">&#9776; </button>
 
@@ -50,12 +62,14 @@
       </header>
 
       <main>
+        <div id=left style=" background: rgba(148, 148, 148, 0.5); "></div>
+          <div id=right style="background: rgba(158, 158, 158,0.2);"></div>
           <script src="virtualjoystick.js"></script>
           <script>
               console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
 
               var joystickR = new VirtualJoystick({
-                  container: document.body.left,
+                  container: left,
                   strokeStyle: 'green',
                   limitStickTravel: true,
                   stickRadius: 50
@@ -68,7 +82,7 @@
               });
 
               var joystickL = new VirtualJoystick({
-                  container: document.body.right,
+                  container: right,
                   strokeStyle: 'purple',
                   limitStickTravel: true,
                   stickRadius: 50
