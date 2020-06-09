@@ -262,6 +262,9 @@ window.addEventListener('DOMContentLoaded', () => {
 function openNav() {
   document.getElementById("mySidepanel").style.width = "250px";
 
+  document.getElementById("Modal1").style.display = "none"
+  document.getElementById("Modal2").style.display = "none"
+
   // DISABLE JOYSTICK///////////////////////////
   joystickR.removeEventListener('touchStartValidation', function (event) {
     var touch = event.changedTouches[0];

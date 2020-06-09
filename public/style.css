@@ -64,16 +64,16 @@
     padding: 1em;
     width: 200px;
     background: transparent;
-    border: 4px solid #f22f46;
+    border: 4px solid rgb(0,0,0);
     border-radius: 4px;
     transition: all 0.4s ease 0s;
     cursor: pointer;
-    color: #f22f46;
+    color: rgb(0,0,0);
     margin-bottom: 4em;
   }
   button:hover,
   button:focus {
-    background: #f22f46;
+    background: rgb(0,0,0);
     color: #fff;
   }
   
@@ -151,4 +151,27 @@
 @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
+  }
+
+
+  /* Modal boxes */
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 80%;
+    height: 70%;
+    padding-left: 1em;
+    padding-right: 1em;
+    max-height: 100hv;
+
+    z-index: 1; /* Sit on top */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgb(255, 255, 255); /* Black w/ opacity */
+
+    text-align: center;
+    overflow: auto;
   }

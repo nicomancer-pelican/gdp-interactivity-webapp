@@ -91,18 +91,20 @@
       firebase.initializeApp(firebaseConfig);
     </script>
 
-    <div id="Modal1" class="modal">
+    <div id="Modal1" class="modal fade">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Remote Control</h2>
+          <h2>How This Works</h2>
         </div>
         <div class="modal-body">
-          <p>Brief explanation of what this page is for</p>
-          <p>How the controls work</p>
+          <p>This page will allow you to control the airship using two virtual joysticks.</p>
+          <p>The left joystick controls altitude (up and down) and yaw (turning on the spot).
+            The right joystick controls movement forwards, backwards, left and right.</p>
+          <p>Your time in command will last 10 seconds from when you hit the start button.</p>
         </div>
         <div class="modal-footer">
-          <button id="GoHome">Return to Home</button>
           <button id="Start">Start</button>
+          <button id="GoHome">Return to Home</button>
         </div>
       </div>
     </div>
@@ -110,10 +112,11 @@
     <div id="Modal2" class="modal fade" hidden="true">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Remote Control</h2>
+          <h2>Time's Up!</h2>
         </div>
         <div class="modal-body">
-          <p>Time's up!</p>
+          <p>Your 10 seconds as captain of the airship are up.</p>
+          <p>We hope you enjoyed your flight!</p>
         </div>
         <div class="modal-footer">
           <button id="GoHome2">Return to Home</button>
