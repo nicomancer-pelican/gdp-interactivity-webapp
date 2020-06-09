@@ -11,8 +11,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   joystickR.addEventListener('touchStartValidation', function (event) {
     var touch = event.changedTouches[0];
-    if (touch.pageX < window.innerWidth / 2) return false;
-    return true
+    if (touch.pageX > window.innerWidth / 2 & touch.pageY > 80) return true;
+    return false
   });
 
   joystickR.addEventListener('touchStart', function () {
@@ -29,8 +29,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   joystickL.addEventListener('touchStartValidation', function (event) {
     var touch = event.changedTouches[0];
-    if (touch.pageX >= window.innerWidth / 2) return false;
-    return true
+    if (touch.pageX <= window.innerWidth / 2 & touch.pageY > 80) return true;
+    return false
   });
 
   joystickL.addEventListener('touchStart', function () {
@@ -127,7 +127,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // ANIMATE FUNCTION
   function animate(){
     //stop if exceed 300 frames --> 10 seconds at 30 fps
-    if(frameCount >= 20){
+    if(frameCount >= 300){
       return;
     }
 
@@ -150,7 +150,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       var data = left.concat(right);
       console.log(`i: ${i}, framecount: ${frameCount}`)
-      pushData(i,frameCount)
+      //pushData(i,frameCount)
 
       // FUNCTIONS:
       // LEFT JOYSTICK

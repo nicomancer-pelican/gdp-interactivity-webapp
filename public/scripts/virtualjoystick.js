@@ -1,3 +1,4 @@
+// code that Easha found on github
 var VirtualJoystick	= function(opts)
 {
 	opts			= opts			|| {};
