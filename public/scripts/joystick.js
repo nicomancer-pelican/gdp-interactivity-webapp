@@ -183,10 +183,54 @@ window.addEventListener('DOMContentLoaded', () => {
 // SIDE BAR
 /* Set the width of the sidebar to 250px (show it) */
 function openNav() {
-  document.getElementById("mySidepanel").style.width = "250px";
+    document.getElementById("mySidepanel").style.width = "250px";
+
+    // DISABLE JOYSTICK///////////////////////////
+    joystickR.removeEventListener('touchStartValidation', function (event) {
+        var touch = event.changedTouches[0];
+        if (touch.pageX < window.innerWidth / 2 & touch.pageY > 80) return true;
+        return false
+    });
+
+    joystickL.removeEventListener('touchStartValidation', function (event) {
+        var touch = event.changedTouches[0];
+        if (touch.pageX >= window.innerWidth / 2 & touch.pageY > 80) return true;
+        return false
+    });
+
+    joystickR.addEventListener('touchStartValidation', function (event) {
+        return false;
+    });
+
+    joystickL.addEventListener('touchStartValidation', function (event) {
+        return false;
+    });
+    //////////////////////////////////////////////////
 }
 
 /* Set the width of the sidebar to 0 (hide it) */
 function closeNav() {
-  document.getElementById("mySidepanel").style.width = "0";
+    document.getElementById("mySidepanel").style.width = "0";
+
+    // ENABLE JOYSTICK ///////////////////////////////
+    joystickR.removeEventListener('touchStartValidation', function (event) {
+        return false;
+    });
+
+    joystickL.removeEventListener('touchStartValidation', function (event) {
+        return false;
+    });
+
+    joystickR.addEventListener('touchStartValidation', function (event) {
+        var touch = event.changedTouches[0];
+        if (touch.pageX < window.innerWidth / 2 & touch.pageY > 80) return true;
+        return false
+    });
+
+    joystickL.addEventListener('touchStartValidation', function (event) {
+        var touch = event.changedTouches[0];
+        if (touch.pageX >= window.innerWidth / 2 & touch.pageY > 80) return true;
+        return false
+    });
+    //////////////////////////////////////////////////
 }
