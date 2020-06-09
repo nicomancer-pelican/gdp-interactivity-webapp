@@ -1,25 +1,69 @@
 window.addEventListener('DOMContentLoaded', () => {
-    // LINK BUTTONS ETC.
-    const button1 = document.getElementById('button1')
-    const button2 = document.getElementById('button2')
-    const result = document.getElementById('result')
-    const main = document.getElementsByTagName('main')[0]
+  console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
 
-    // FIREBASE REALTIME DATABASE BITS AND BOBS
-    var database = firebase.database();
-    var dbRef = firebase.database().ref('sounds');
+  // RIGHT JOYSTICK
+  var joystickR = new VirtualJoystick({
+    container: document.body.left,
+    strokeStyle: 'green',
+    limitStickTravel: true,
+    stickRadius: 50
+  });
 
-    // SELECT TRACK 1
-    button1.addEventListener('click', event => {
-      var pull
+  joystickR.addEventListener('touchStartValidation', function (event) {
+    var touch = event.changedTouches[0];
+    if (touch.pageX > window.innerWidth / 2 & touch.pageY > 80) return true;
+    return false
+  });
 
-      // find position i near the end to go a bit faster
-      const findPos = function(){
+  joystickR.addEventListener('touchStart', function () {
+    console.log('fire right')
+  })
+
+  // LEFT JOYSTICK
+  var joystickL = new VirtualJoystick({
+    container: document.body.right,
+    strokeStyle: 'purple',
+    limitStickTravel: true,
+    stickRadius: 50
+  });
+
+  joystickL.addEventListener('touchStartValidation', function (event) {
+    var touch = event.changedTouches[0];
+    if (touch.pageX <= window.innerWidth / 2 & touch.pageY > 80) return true;
+    return false
+  });
+
+  joystickL.addEventListener('touchStart', function () {
+    console.log('fire left')
+  })
+
+  // SET X and Y
+  document.addEventListener("touchmove", function (e) {
+    e.preventDefault();
+  }, { passive: false });
+
+  var dx = 0.00;
+  var dy = 0.00;
+  var left = "00.00";
+  var right = "00.00";
+
+  // FPS CONTROL
+  var frameCount = 0;
+  var fpsInterval, startTime, now, then, elapsed, i;
+  function startAnimating(fps) {
+    fpsInterval = 1000 / fps;
+    then = Date.now();
+    startTime = then;
+    console.log(startTime);
+
+    var pull
+    // find position i near the end to go a bit faster
+    const findPos = function(){
         return new Promise(function(resolve){
           var incoming
           var temp
           var key
-          var endRef = firebase.database().ref('commands').limitToLast(1)
+          var endRef = firebase.database().ref('joystick').limitToLast(1)
 
           endRef.once('value', function(snapshot){
             incoming = snapshot.val();
@@ -31,13 +75,13 @@ window.addEventListener('DOMContentLoaded', () => {
             resolve(key)
           })
         })
-      }
+    }
 
-      // pull data from position i
-      const pullData = function(i){
+    // pull data from position i
+    const pullData = function(i){
         return new Promise(function(resolve){
           var hello = `${i}`;
-          var cpRef = firebase.database().ref('sounds').child(hello).child('complete')
+          var cpRef = firebase.database().ref('joystick').child(hello).child('complete')
 
           cpRef.once('value', function(snapshot){
             pull = snapshot.val();
@@ -47,135 +91,129 @@ window.addEventListener('DOMContentLoaded', () => {
             resolve(pull)
           })
         })
-      }
+    }
 
-      //function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
-      const pushData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var noRef = firebase.database().ref('sounds').child(hello);
-          noRef.set({
-            "sound" : "Track 1",
-            "complete" : false
-          });
-          var message = 'data sent to database'
-          resolve(message)
-        })
-      }
-
-      //call promise sequence
-      const loop = function(value){
+    //call promise sequence
+    const loop = function(value){
         complete = pullData(value)
         .then(complete => {
           if (complete != null){
             return loop(value + 1)
           } else {
-            pushData(value).then(message => {
-              console.log(message)
-              console.log(`Queue position: ${value}`)
-              return
-            })
+            console.log(`queue position: ${value}`)
+            i = value;
+            var hello = `${i}`;
+            var noRef = firebase.database().ref('joystick').child(hello);
+            noRef.set({
+              "complete" : false
+            });
+            animate()
           }
         })
-      }
+    }
 
-      findPos()
-        .then(function(value){
-          console.log(`the resolved value is called key and has value ${value}`)
-          return value
-        })
-        .then((value) => {
-          console.log(`the resolved value is called pull and has value ${value}`)
-          return value
-        }).then((value) => {
-          loop(value)
-        })
+    findPos()
+    .then(function(value){
+      return value
     })
+    .then((value) => {
+      return value
+    })
+    .then((value) => {
+      loop(value)
+    })
+  }
 
-    // SELECT TRACK 2
-    button2.addEventListener('click', event => {
-      var pull
+  // ANIMATE FUNCTION
+  function animate(){
+    //stop if exceed 300 frames --> 10 seconds at 30 fps
+    if(frameCount >= 300){
+      return;
+    }
 
-      // find position i near the end to go a bit faster
-      const findPos = function(){
-        return new Promise(function(resolve){
-          var incoming
-          var temp
-          var key
-          var endRef = firebase.database().ref('commands').limitToLast(1)
+    requestAnimationFrame(animate); //request a frame
+    now = Date.now();               //time now
+    elapsed = now - then;           //elapsed time since last loop
 
-          endRef.once('value', function(snapshot){
-            incoming = snapshot.val();
-          })
-          .then(function(){
-            temp = Object.keys(incoming)
-            key = parseInt(temp[0])
-            console.log(`key retrieved: ${key}`)
-            resolve(key)
-          })
-        })
+    // if enough time has elapsed, draw the next frame
+    if (elapsed > fpsInterval) {
+      //Get ready for next frame by setting then=now, but also adjust for your
+      //specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+      then = now - (elapsed % fpsInterval);
+      frameCount = frameCount + 1;
+
+      left = LJoystick();
+      console.log(`left joystick: ${left}`)
+
+      right = RJoystick();
+      console.log(`right joystick: ${right}`)
+
+      var data = left.concat(right);
+      console.log(`i: ${i}, framecount: ${frameCount}`)
+      //pushData(i,frameCount)
+
+      // FUNCTIONS:
+      // LEFT JOYSTICK
+      function LJoystick(){
+        dx = joystickL.deltaX().toFixed(2);
+        dy = -joystickL.deltaY().toFixed(2);
+
+        if (dx < 0) {
+          dx = Math.abs(dx).toString().concat("1")
+        } else {
+          dx = Math.abs(dx).toString().concat("0")
+        }
+        dx = String("000000" + dx).slice(-6);
+
+        if (dy < 0) {
+          dy = Math.abs(dy).toString().concat("1")
+        } else {
+          dy = Math.abs(dy).toString().concat("0")
+        }
+        dy = String("000000" + dy).slice(-6);
+
+        return dx.concat(dy);
       }
 
-      // pull data from position i
-      const pullData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var cpRef = firebase.database().ref('sounds').child(hello).child('complete')
+      // RIGHT JOYSTICK
+      function RJoystick(){
+        dx = joystickR.deltaX().toFixed(2);
+        dy = -joystickR.deltaY().toFixed(2);
 
-          cpRef.once('value', function(snapshot){
-            pull = snapshot.val();
-          })
-          .then(function(){
-            console.log(`pulling from queue position ${i}`)
-            resolve(pull)
-          })
-        })
+        if (dx < 0) {
+          dx = Math.abs(dx).toString().concat("1")
+        } else {
+          dx = Math.abs(dx).toString().concat("0")
+        }
+        dx = String("000000" + dx).slice(-6);
+
+        if (dy < 0) {
+          dy = Math.abs(dy).toString().concat("1")
+        } else {
+          dy = Math.abs(dy).toString().concat("0")
+        }
+        dy = String("000000" + dy).slice(-6);
+
+        return dx.concat(dy);
       }
 
-      //function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
-      const pushData = function(i){
+      // PUSH DATA
+      function pushData(i,j){
         return new Promise(function(resolve){
           var hello = `${i}`;
-          var noRef = firebase.database().ref('sounds').child(hello);
-          noRef.set({
-            "sound" : "Track 2",
-            "complete" : false
+          var smile = `${j}`;
+          var noRef = firebase.database().ref('joystick').child(hello);
+          noRef.update({
+            [smile] : data
           });
           var message = 'data sent to database'
           resolve(message)
         })
       }
+    }
+  }
 
-      //call promise sequence
-      const loop = function(value){
-        complete = pullData(value)
-        .then(complete => {
-          if (complete != null){
-            return loop(value + 1)
-          } else {
-            pushData(value).then(message => {
-              console.log(message)
-              console.log(`Queue position: ${value}`)
-              return
-            })
-          }
-        })
-      }
-
-      findPos()
-        .then(function(value){
-          console.log(`the resolved value is called key and has value ${value}`)
-          return value
-        })
-        .then((value) => {
-          console.log(`the resolved value is called pull and has value ${value}`)
-          return value
-        }).then((value) => {
-          loop(value)
-        })
-    })
-
-
+  startAnimating(30); //30 fps
 })
   
 

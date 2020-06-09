@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Home</title>
+    <title>Remote Control</title>
     <link rel="stylesheet" href="./style.css" />
     <!-- Load an icon library -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -43,119 +43,34 @@
   </head>
 
   <body>
-      <header>
-          <div id="mySidepanel" class="sidepanel">
-              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-              <a href="index.html"><i class="material-icons">home</i> Home</a>
-              <a href="commands.html"><i class="material-icons">record_voice_over</i> Voice Commands</a>
-              <a href="joystick.html"><i class="material-icons">speaker</i> Remote Control</a>
-              <a href="destinations.html"><i class="material-icons">speaker</i> Destination Request</a>
-              <a href="info.html"><i class="material-icons">lightbulb</i> Project Info</a>
-              <a href="help.html"><i class="material-icons">help</i> Help</a>
-              <a href="report.html"><i class="material-icons">feedback</i> Report</a>
-          </div>
+    <header>
+      <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html"><i class="material-icons">home</i> Home</a>
+        <a href="commands.html"><i class="material-icons">record_voice_over</i> Voice Commands</a>
+        <a href="joystick.html"><i class="material-icons">videogame_asset</i> Remote Control</a>
+        <a href="destinations.html"><i class="material-icons">directions</i> Destination Request</a>
+        <a href="info.html"><i class="material-icons">info</i> Project Info</a>
+        <a href="help.html"><i class="material-icons">help</i> Help</a>
+        <a href="report.html"><i class="material-icons">feedback</i> Report</a>
+      </div>
 
+      <button class="openbtn" onclick="openNav()">&#9776; </button>
+      <h1>Remote Control</h1>
+    </header>
 
-              <button class="openbtn" onclick="openNav()">&#9776; </button>
+    <main>
+      <div id=left></div>
+      <div id=right></div>
 
-              <h1>Remote Control</h1>
-      </header>
-
-      <main>
-        <div id=left style=" background: rgba(148, 148, 148, 0.5); "></div>
-          <div id=right style="background: rgba(158, 158, 158,0.2);"></div>
-          <script src="virtualjoystick.js"></script>
-          <script>
-              console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
-
-              var joystickR = new VirtualJoystick({
-                  container: left,
-                  strokeStyle: 'green',
-                  limitStickTravel: true,
-                  stickRadius: 50
-              });
-
-              joystickR.addEventListener('touchStartValidation', function (event) {
-                  var touch = event.changedTouches[0];
-                  if (touch.pageX < window.innerWidth / 2 & touch.pageY > 80) return true;
-                  return false
-              });
-
-              var joystickL = new VirtualJoystick({
-                  container: right,
-                  strokeStyle: 'purple',
-                  limitStickTravel: true,
-                  stickRadius: 50
-              });
-
-              joystickL.addEventListener('touchStartValidation', function (event) {
-                  var touch = event.changedTouches[0];
-                  if (touch.pageX >= window.innerWidth / 2 & touch.pageY > 80) return true;
-                  return false
-              });
-
-              joystickL.addEventListener('touchStart', function () {
-                  console.log('fire')
-              })
-              joystickR.addEventListener('touchStart', function () {
-                  console.log('fire')
-              })
-
-              document.addEventListener("touchmove", function (e) {
-                  e.preventDefault();
-              }, { passive: false });
-
-              var dx = 0.00;
-              var dy = 0.00;
-              var left = "00.00";
-              var right = "00.00";
-
-              animate();
-
-              function animate() {
-                  requestAnimationFrame(animate);
-
-                  dx = joystickL.deltaX().toFixed(2);
-                  dy = -joystickL.deltaY().toFixed(2);
-
-                  if (dx < 0) {
-                      dx = Math.abs(dx).toString().concat("1")
-                  } else { dx = Math.abs(dx).toString().concat("0") }
-                  dx = String("000000" + dx).slice(-6);
-
-                  if (dy < 0) {
-                      dy = Math.abs(dy).toString().concat("1")
-                  } else { dy = Math.abs(dy).toString().concat("0") }
-                  dy = String("000000" + dy).slice(-6);
-
-                  left = dx.concat(dy);
-
-                 
-
-                  dx = joystickR.deltaX().toFixed(2);
-                  dy = -joystickR.deltaY().toFixed(2);
-
-                  if (dx < 0) {
-                      dx = Math.abs(dx).toString().concat("1")
-                  } else { dx = Math.abs(dx).toString().concat("0") }
-                  dx = String("000000" + dx).slice(-6);
-
-                  if (dy < 0) {
-                      dy = Math.abs(dy).toString().concat("1")
-                  } else { dy = Math.abs(dy).toString().concat("0") }
-                  dy = String("000000" + dy).slice(-6);
-
-                  right = dx.concat(dy);
-              }
-
-          </script>
-      </main>
+      <script src="./scripts/virtualjoystick.js"></script>
+      <script src="./scripts/joystick.js"></script>
+    </main>
 
     <footer>
       <p>Imperial College London</p>
     </footer>
 
-    <script type="text/javascript" src="./scripts/joystick.js"></script>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
