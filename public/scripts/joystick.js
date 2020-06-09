@@ -1,9 +1,11 @@
 window.addEventListener('DOMContentLoaded', () => {
   console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
-  
+
   // MODAL BOX
-  var modal = document.getElementById("myModal");
+  var modal1 = document.getElementById("Modal1");
+  var modal2 = document.getElementById("Modal2");
   var GoHome = document.getElementById("GoHome");
+  var GoHome2 = document.getElementById("GoHome2");
   var Start = document.getElementById("Start");
 
   // button clicks
@@ -12,7 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   Start.onclick = function(){
-    modal.style.display = "none"
+    modal1.style.display = "none"
     // RIGHT JOYSTICK
     var joystickR = new VirtualJoystick({
         container: left,
@@ -143,88 +145,110 @@ window.addEventListener('DOMContentLoaded', () => {
     function animate(){
       //stop if exceed 300 frames --> 10 seconds at 30 fps
       if(frameCount >= 300){
-        return;
-      }
+        joystickR.removeEventListener('touchStartValidation', function (event) {
+          var touch = event.changedTouches[0];
+          if (touch.pageX < window.innerWidth / 2 & touch.pageY > 80) return true;
+          return false
+        });
+        joystickL.removeEventListener('touchStartValidation', function (event) {
+          var touch = event.changedTouches[0];
+          if (touch.pageX >= window.innerWidth / 2 & touch.pageY > 80) return true;
+          return false
+        });
+        joystickR.addEventListener('touchStartValidation', function (event) {
+          return false;
+        });
+        joystickL.addEventListener('touchStartValidation', function (event) {
+          return false;
+        });
+        modal2.removeAttribute('hidden')
 
-      requestAnimationFrame(animate); //request a frame
-      now = Date.now();               //time now
-      elapsed = now - then;           //elapsed time since last loop
+        GoHome2.onclick = function(){
+          location.href = 'index.html';
+        }
+        return
+      } else {
+        requestAnimationFrame(animate); //request a frame
+        now = Date.now();               //time now
+        elapsed = now - then;           //elapsed time since last loop
 
-      // if enough time has elapsed, draw the next frame
-      if (elapsed > fpsInterval) {
-        //Get ready for next frame by setting then=now, but also adjust for your
-        //specified fpsInterval not being a multiple of RAF's interval (16.7ms)
-        then = now - (elapsed % fpsInterval);
-        frameCount = frameCount + 1;
+        // if enough time has elapsed, draw the next frame
+        if (elapsed > fpsInterval) {
+          //Get ready for next frame by setting then=now, but also adjust for your
+          //specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+          then = now - (elapsed % fpsInterval);
+          frameCount = frameCount + 1;
 
-        left = LJoystick();
-        console.log(`left joystick: ${left}`)
+          left = LJoystick();
+          console.log(`left joystick: ${left}`)
 
-        right = RJoystick();
-        console.log(`right joystick: ${right}`)
+          right = RJoystick();
+          console.log(`right joystick: ${right}`)
 
-        var data = left.concat(right);
-        console.log(`i: ${i}, framecount: ${frameCount}`)
-        pushData(i,frameCount)
+          var data = left.concat(right);
+          console.log(`i: ${i}, framecount: ${frameCount}`)
+          pushData(i,frameCount)
 
-        // FUNCTIONS:
-        // LEFT JOYSTICK
-        function LJoystick(){
-          dx = joystickL.deltaX().toFixed(2);
-          dy = -joystickL.deltaY().toFixed(2);
+          // FUNCTIONS:
+          // LEFT JOYSTICK
+          function LJoystick(){
+            dx = joystickL.deltaX().toFixed(2);
+            dy = -joystickL.deltaY().toFixed(2);
 
-          if (dx < 0) {
-            dx = Math.abs(dx).toString().concat("1")
-          } else {
-            dx = Math.abs(dx).toString().concat("0")
+            if (dx < 0) {
+              dx = Math.abs(dx).toString().concat("1")
+            } else {
+              dx = Math.abs(dx).toString().concat("0")
+            }
+            dx = String("000000" + dx).slice(-6);
+
+            if (dy < 0) {
+              dy = Math.abs(dy).toString().concat("1")
+            } else {
+              dy = Math.abs(dy).toString().concat("0")
+            }
+            dy = String("000000" + dy).slice(-6);
+
+            return dx.concat(dy);
           }
-          dx = String("000000" + dx).slice(-6);
 
-          if (dy < 0) {
-            dy = Math.abs(dy).toString().concat("1")
-          } else {
-            dy = Math.abs(dy).toString().concat("0")
+          // RIGHT JOYSTICK
+          function RJoystick(){
+            dx = joystickR.deltaX().toFixed(2);
+            dy = -joystickR.deltaY().toFixed(2);
+
+            if (dx < 0) {
+              dx = Math.abs(dx).toString().concat("1")
+            } else {
+              dx = Math.abs(dx).toString().concat("0")
+            }
+            dx = String("000000" + dx).slice(-6);
+
+            if (dy < 0) {
+              dy = Math.abs(dy).toString().concat("1")
+            } else {
+              dy = Math.abs(dy).toString().concat("0")
+            }
+            dy = String("000000" + dy).slice(-6);
+
+            return dx.concat(dy);
           }
-          dy = String("000000" + dy).slice(-6);
 
-          return dx.concat(dy);
+          // PUSH DATA
+          function pushData(i,j){
+            return new Promise(function(resolve){
+              var hello = `${i}`;
+              var smile = `${j}`;
+              var noRef = firebase.database().ref('joystick').child(hello);
+              noRef.update({
+                [smile] : data
+              });
+              var message = 'data sent to database'
+              resolve(message)
+            })
+          }
         }
 
-        // RIGHT JOYSTICK
-        function RJoystick(){
-          dx = joystickR.deltaX().toFixed(2);
-          dy = -joystickR.deltaY().toFixed(2);
-
-          if (dx < 0) {
-            dx = Math.abs(dx).toString().concat("1")
-          } else {
-            dx = Math.abs(dx).toString().concat("0")
-          }
-          dx = String("000000" + dx).slice(-6);
-
-          if (dy < 0) {
-            dy = Math.abs(dy).toString().concat("1")
-          } else {
-            dy = Math.abs(dy).toString().concat("0")
-          }
-          dy = String("000000" + dy).slice(-6);
-
-          return dx.concat(dy);
-        }
-
-        // PUSH DATA
-        function pushData(i,j){
-          return new Promise(function(resolve){
-            var hello = `${i}`;
-            var smile = `${j}`;
-            var noRef = firebase.database().ref('joystick').child(hello);
-            noRef.update({
-              [smile] : data
-            });
-            var message = 'data sent to database'
-            resolve(message)
-          })
-        }
       }
     }
   }
