@@ -18,7 +18,7 @@ x add Remote Control page
 - add an info page with project info etc.
 - remake JSON file
 x fix the stupid event listener thing
-- set which functionalities are available
+x set which functionalities are available
 x custom 404 page
 - make your code a tad more readable
 - make it look pretty
