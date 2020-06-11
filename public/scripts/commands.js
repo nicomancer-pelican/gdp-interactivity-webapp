@@ -198,6 +198,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       document.getElementById("instruction").style.display = "none"
+      document.getElementById("instruction2").style.display = "none"
       document.getElementById("button").style.display = "none"
       document.getElementById("result").style.display = "none"
 

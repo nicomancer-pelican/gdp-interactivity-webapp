@@ -33,6 +33,12 @@ window.addEventListener('DOMContentLoaded', () => {
       GoHome.onclick = function(){
         location.href = 'index.html';
       }
+      GoHome2.onclick = function(){
+        location.href = 'index.html';
+      }
+      GoHome3.onclick = function(){
+        location.href = 'index.html';
+      }
   
       // START BUTTON
       Start.onclick = function(){
