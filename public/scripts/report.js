@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
     var database = firebase.database();
     var dbRef = firebase.database().ref('reports');
 
-    // SELECT TRACK
+    // SEND REPORT
     button.addEventListener('click', event => {
       var commandListRef = firebase.database().ref(dbRef)
       var newCommandRef = commandListRef.push();

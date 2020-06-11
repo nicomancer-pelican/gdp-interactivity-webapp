@@ -157,7 +157,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     console.log(message)
                     console.log(`Queue position: ${value}`)
                     confirm.setAttribute('hidden','true')
-                    result.textContent = `Key value: ${value}`
+                    result.textContent = `Your request has been submitted and is in the queue.`
                     return
                   })
                 }

@@ -32,53 +32,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // FOYER
     button1.addEventListener('click', event => {
-      var pull
-
-      // find position i near the end to go a bit faster
-      const findPos = function(){
+      function pushData(){
         return new Promise(function(resolve){
-          var incoming
-          var temp
-          var key
-          var endRef = firebase.database().ref('destinations').limitToLast(1)
-
-          endRef.once('value', function(snapshot){
-            incoming = snapshot.val();
-          })
-          .then(function(){
-            temp = Object.keys(incoming)
-            key = parseInt(temp[0])
-            console.log(`key retrieved: ${key}`)
-            resolve(key)
-          })
-        })
-      }
-
-      // pull data from position i
-      const pullData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var cpRef = firebase.database().ref('destinations').child(hello).child('complete')
-
-          cpRef.once('value', function(snapshot){
-            pull = snapshot.val();
-          })
-          .then(function(){
-            console.log(`pulling from queue position ${i}`)
-            resolve(pull)
-          })
-        })
-      }
-
-      //function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
-      const pushData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var noRef = firebase.database().ref('destinations').child(hello);
+          var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "destination" : "foyer",
-            "complete" : false
+            "foyer" : true
           });
 
           var message = 'data sent to database'
@@ -86,83 +45,17 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      //call promise sequence
-      const loop = function(value){
-        complete = pullData(value)
-        .then(complete => {
-          if (complete != null){
-            return loop(value + 1)
-          } else {
-            pushData(value).then(message => {
-              console.log(message)
-              console.log(`Queue position: ${value}`)
-              return
-            })
-          }
-        })
-      }
-
-      findPos()
-      .then(function(value){
-        return value
-      })
-      .then((value) => {
-        return value
-      }).then((value) => {
-        loop(value)
-      })
-    
+      pushData()
     })
 
     // COMMON ROOM
     button2.addEventListener('click', event => {
-      var pull
-
-      // find position i near the end to go a bit faster
-      const findPos = function(){
+      function pushData(){
         return new Promise(function(resolve){
-          var incoming
-          var temp
-          var key
-          var endRef = firebase.database().ref('destinations').limitToLast(1)
-
-          endRef.once('value', function(snapshot){
-            incoming = snapshot.val();
-          })
-          .then(function(){
-            temp = Object.keys(incoming)
-            key = parseInt(temp[0])
-            console.log(`key retrieved: ${key}`)
-            resolve(key)
-          })
-        })
-      }
-
-      // pull data from position i
-      const pullData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var cpRef = firebase.database().ref('destinations').child(hello).child('complete')
-
-          cpRef.once('value', function(snapshot){
-            pull = snapshot.val();
-          })
-          .then(function(){
-            console.log(`pulling from queue position ${i}`)
-            resolve(pull)
-          })
-        })
-      }
-
-      //function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
-      const pushData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var noRef = firebase.database().ref('destinations').child(hello);
+          var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "destination" : "common room",
-            "complete" : false
+            "common room" : true
           });
 
           var message = 'data sent to database'
@@ -170,83 +63,17 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      //call promise sequence
-      const loop = function(value){
-        complete = pullData(value)
-        .then(complete => {
-          if (complete != null){
-            return loop(value + 1)
-          } else {
-            pushData(value).then(message => {
-              console.log(message)
-              console.log(`Queue position: ${value}`)
-              return
-            })
-          }
-        })
-      }
-
-      findPos()
-      .then(function(value){
-        return value
-      })
-      .then((value) => {
-        return value
-      }).then((value) => {
-        loop(value)
-      })
-    
+      pushData()
     })
 
     // CAGB LOBBY
     button3.addEventListener('click', event => {
-      var pull
-
-      // find position i near the end to go a bit faster
-      const findPos = function(){
+      function pushData(){
         return new Promise(function(resolve){
-          var incoming
-          var temp
-          var key
-          var endRef = firebase.database().ref('destinations').limitToLast(1)
-
-          endRef.once('value', function(snapshot){
-            incoming = snapshot.val();
-          })
-          .then(function(){
-            temp = Object.keys(incoming)
-            key = parseInt(temp[0])
-            console.log(`key retrieved: ${key}`)
-            resolve(key)
-          })
-        })
-      }
-
-      // pull data from position i
-      const pullData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var cpRef = firebase.database().ref('destinations').child(hello).child('complete')
-
-          cpRef.once('value', function(snapshot){
-            pull = snapshot.val();
-          })
-          .then(function(){
-            console.log(`pulling from queue position ${i}`)
-            resolve(pull)
-          })
-        })
-      }
-
-      //function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
-      const pushData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var noRef = firebase.database().ref('destinations').child(hello);
+          var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "destination" : "CAGB lobby",
-            "complete" : false
+            "CAGB lobby" : true
           });
 
           var message = 'data sent to database'
@@ -254,83 +81,17 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      //call promise sequence
-      const loop = function(value){
-        complete = pullData(value)
-        .then(complete => {
-          if (complete != null){
-            return loop(value + 1)
-          } else {
-            pushData(value).then(message => {
-              console.log(message)
-              console.log(`Queue position: ${value}`)
-              return
-            })
-          }
-        })
-      }
-
-      findPos()
-      .then(function(value){
-        return value
-      })
-      .then((value) => {
-        return value
-      }).then((value) => {
-        loop(value)
-      })
-    
+      pushData()
     })
 
     // MENS BATHROOM
     button4.addEventListener('click', event => {
-      var pull
-
-      // find position i near the end to go a bit faster
-      const findPos = function(){
+      function pushData(){
         return new Promise(function(resolve){
-          var incoming
-          var temp
-          var key
-          var endRef = firebase.database().ref('destinations').limitToLast(1)
-
-          endRef.once('value', function(snapshot){
-            incoming = snapshot.val();
-          })
-          .then(function(){
-            temp = Object.keys(incoming)
-            key = parseInt(temp[0])
-            console.log(`key retrieved: ${key}`)
-            resolve(key)
-          })
-        })
-      }
-
-      // pull data from position i
-      const pullData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var cpRef = firebase.database().ref('destinations').child(hello).child('complete')
-
-          cpRef.once('value', function(snapshot){
-            pull = snapshot.val();
-          })
-          .then(function(){
-            console.log(`pulling from queue position ${i}`)
-            resolve(pull)
-          })
-        })
-      }
-
-      //function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
-      const pushData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var noRef = firebase.database().ref('destinations').child(hello);
+          var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "destination" : "mens bathroom",
-            "complete" : false
+            "mens bathroom" : true
           });
 
           var message = 'data sent to database'
@@ -338,83 +99,17 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      //call promise sequence
-      const loop = function(value){
-        complete = pullData(value)
-        .then(complete => {
-          if (complete != null){
-            return loop(value + 1)
-          } else {
-            pushData(value).then(message => {
-              console.log(message)
-              console.log(`Queue position: ${value}`)
-              return
-            })
-          }
-        })
-      }
-
-      findPos()
-      .then(function(value){
-        return value
-      })
-      .then((value) => {
-        return value
-      }).then((value) => {
-        loop(value)
-      })
-    
+      pushData()
     })
 
     // LADIES BATHROOM
     button5.addEventListener('click', event => {
-      var pull
-
-      // find position i near the end to go a bit faster
-      const findPos = function(){
+      function pushData(){
         return new Promise(function(resolve){
-          var incoming
-          var temp
-          var key
-          var endRef = firebase.database().ref('destinations').limitToLast(1)
-
-          endRef.once('value', function(snapshot){
-            incoming = snapshot.val();
-          })
-          .then(function(){
-            temp = Object.keys(incoming)
-            key = parseInt(temp[0])
-            console.log(`key retrieved: ${key}`)
-            resolve(key)
-          })
-        })
-      }
-
-      // pull data from position i
-      const pullData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var cpRef = firebase.database().ref('destinations').child(hello).child('complete')
-
-          cpRef.once('value', function(snapshot){
-            pull = snapshot.val();
-          })
-          .then(function(){
-            console.log(`pulling from queue position ${i}`)
-            resolve(pull)
-          })
-        })
-      }
-
-      //function to increment queue (if needed - probs won't ever be more than once or twice) or push to update database
-      const pushData = function(i){
-        return new Promise(function(resolve){
-          var hello = `${i}`;
-          var noRef = firebase.database().ref('destinations').child(hello);
+          var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "destination" : "ladies bathroom",
-            "complete" : false
+            "ladies bathroom" : true
           });
 
           var message = 'data sent to database'
@@ -422,32 +117,7 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      //call promise sequence
-      const loop = function(value){
-        complete = pullData(value)
-        .then(complete => {
-          if (complete != null){
-            return loop(value + 1)
-          } else {
-            pushData(value).then(message => {
-              console.log(message)
-              console.log(`Queue position: ${value}`)
-              return
-            })
-          }
-        })
-      }
-
-      findPos()
-      .then(function(value){
-        return value
-      })
-      .then((value) => {
-        return value
-      }).then((value) => {
-        loop(value)
-      })
-    
+      pushData()
     })
     } else {
     document.getElementById("button1").style.display = "none"

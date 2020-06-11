@@ -15,18 +15,18 @@ x remove lights page
 x remove sounds page
 x add Remote Control page
 - credit joystick code person
-- add an info page with project info etc.
+x add an info page with project info etc.
 - remake JSON file
 x fix the stupid event listener thing
 x set which functionalities are available
 x custom 404 page
 - make your code a tad more readable
-- make it look pretty
+x make it look pretty
 
 
 MATLAB
 x sort out loop
 x create demo for commands
-- pull data functions
-- update complete bit on database when action is done
+x pull data functions
+x update complete bit on database when action is done
 - set which functionalities are available

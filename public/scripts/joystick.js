@@ -33,12 +33,6 @@ window.addEventListener('DOMContentLoaded', () => {
       GoHome.onclick = function(){
         location.href = 'index.html';
       }
-      GoHome2.onclick = function(){
-        location.href = 'index.html';
-      }
-      GoHome3.onclick = function(){
-        location.href = 'index.html';
-      }
   
       // START BUTTON
       Start.onclick = function(){
@@ -145,7 +139,28 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (complete === null){
                   return loop(value + 1)
                 } else if (complete === false){
+                  joystickR.removeEventListener('touchStartValidation', function (event) {
+                    var touch = event.changedTouches[0];
+                    if (touch.pageX < window.innerWidth / 2 & touch.pageY > 80) return true;
+                    return false
+                  });
+                  joystickL.removeEventListener('touchStartValidation', function (event) {
+                    var touch = event.changedTouches[0];
+                    if (touch.pageX >= window.innerWidth / 2 & touch.pageY > 80) return true;
+                    return false
+                  });
+                  joystickR.addEventListener('touchStartValidation', function (event) {
+                    return false;
+                  });
+                  joystickL.addEventListener('touchStartValidation', function (event) {
+                    return false;
+                  });
+
                   modal3.removeAttribute('hidden')
+
+                  GoHome3.onclick = function(){
+                    location.href = 'index.html';
+                  }
                 } else {
                   console.log(`queue position: ${value}`)
                   i = value;
@@ -173,8 +188,8 @@ window.addEventListener('DOMContentLoaded', () => {
   
         // ANIMATE FUNCTION
         function animate(){
-          //stop if exceed 300 frames --> 10 seconds at 30 fps
-          if(frameCount >= 300){
+          //stop if exceed 200 frames --> 10 seconds at 20 fps
+          if(frameCount >= 200){
             joystickR.removeEventListener('touchStartValidation', function (event) {
               var touch = event.changedTouches[0];
               if (touch.pageX < window.innerWidth / 2 & touch.pageY > 80) return true;
@@ -191,6 +206,7 @@ window.addEventListener('DOMContentLoaded', () => {
             joystickL.addEventListener('touchStartValidation', function (event) {
               return false;
             });
+
             modal2.removeAttribute('hidden')
   
             GoHome2.onclick = function(){
@@ -288,6 +304,7 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById("Modal1").style.display = "none"
 
       document.getElementById("inactive").removeAttribute('hidden')
+      return
     }
   })
 })
