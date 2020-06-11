@@ -4,7 +4,7 @@ function response = cleanVoiceCommands
 %the database
 %
 %   INPUTS: none
-%   OUTPUS: response -- should be empty if everything went well
+%   OUTPUS: none
 %
 %   np3217, 01333401, 11/06/2020
 %   written for the Autonomous Airship 2020 Group Design Project
@@ -12,5 +12,5 @@ function response = cleanVoiceCommands
 
     URL = 'https://airship-a31a9.firebaseio.com/commands.json';
     options = weboptions('KeyName', 'X-HTTP-Method-Override', 'KeyValue','DELETE');
-    response = webwrite(URL,options);
+    webwrite(URL,options);
 end
