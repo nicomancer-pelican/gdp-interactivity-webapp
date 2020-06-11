@@ -21,7 +21,7 @@
   }
   header {
     border-bottom: 1px solid #0d122b;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
   }
   main {
     flex-grow: 2;
@@ -30,8 +30,11 @@
     background-color: #fff;
     border-radius: 12px;
     margin-bottom: 2em;
-    padding-top: 4em;
+    padding-top: 1em;
     text-align: center;
+  }
+  ul {
+    text-align: center; 
   }
   @keyframes bg-pulse {
     0% {
@@ -96,7 +99,7 @@
     height: 100%; /* Specify a height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    z-index: 10; /* Stay on top */
     top: 0;
     left: 0;
     background-color: #111; /* Black*/
@@ -167,11 +170,40 @@
     padding-right: 1em;
     max-height: 100hv;
 
-    z-index: 1; /* Sit on top */
+    z-index: 1; /* Sit on top but below side bar */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgb(255, 255, 255); /* Black w/ opacity */
 
     text-align: center;
     overflow: auto;
+  }
+
+  /* Table */
+  thead th {
+    color: #fff;
+    font-weight: initial;
+  }
+  
+  tr { background: #f1f1f1; }
+  
+  tr:nth-child(2n) { background: #e0e0e0; }
+  
+  th {
+    background: rgb(248, 232, 0);
+    text-align: left;
+    padding: 24px;
+  }
+
+  td {
+    text-align: left;
+    padding: 24px;
+  }
+  
+  tfoot tr { background: none; }
+  
+  tfoot td {
+    padding: 12px 2px;
+    font-style: italic;
+    color: rgb(248, 232, 0);
   }

@@ -23,12 +23,20 @@ window.addEventListener('DOMContentLoaded', () => {
       // MODAL BOX
       var modal1 = document.getElementById("Modal1");
       var modal2 = document.getElementById("Modal2");
+      var modal3 = document.getElementById("Modal3");
       var GoHome = document.getElementById("GoHome");
       var GoHome2 = document.getElementById("GoHome2");
+      var GoHome3 = document.getElementById("GoHome3");
       var Start = document.getElementById("Start");
   
       // GO HOME BUTTON
       GoHome.onclick = function(){
+        location.href = 'index.html';
+      }
+      GoHome2.onclick = function(){
+        location.href = 'index.html';
+      }
+      GoHome3.onclick = function(){
         location.href = 'index.html';
       }
   
@@ -81,7 +89,7 @@ window.addEventListener('DOMContentLoaded', () => {
         var left = "00.00";
         var right = "00.00";
   
-        startAnimating(30)  //30 fps
+        startAnimating(20)  //20 fps
   
         // FUNCTIONS:
         // FPS CONTROL
@@ -134,8 +142,10 @@ window.addEventListener('DOMContentLoaded', () => {
           const loop = function(value){
               complete = pullData(value)
               .then(complete => {
-                if (complete != null){
+                if (complete === null){
                   return loop(value + 1)
+                } else if (complete === false){
+                  modal3.removeAttribute('hidden')
                 } else {
                   console.log(`queue position: ${value}`)
                   i = value;
@@ -288,9 +298,6 @@ window.addEventListener('DOMContentLoaded', () => {
 /* Set the width of the sidebar to 250px (show it) */
 function openNav() {
   document.getElementById("mySidepanel").style.width = "250px";
-
-  document.getElementById("Modal1").style.display = "none"
-  document.getElementById("Modal2").style.display = "none"
 
   // DISABLE JOYSTICK///////////////////////////
   joystickR.removeEventListener('touchStartValidation', function (event) {
