@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="./style.css" />
     <!-- Load an icon library -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+          
+          .wrapper {
+              background-size: cover;
+              background: transparent url("yellow3.png") no-repeat center center;
+              -webkit-filter: blur(2px) opacity(80%);
+              filter: blur(2px) opacity(80%);
+              top: 5em;
+              padding: 2em;
+              bottom: 3.2em;
+              right: 0;
+              width: 100%;
+              position: fixed;
+          }
+
+      </style>
   </head>
 
   <body>
@@ -28,20 +44,23 @@
       <h1>AIM Airship</h1>
     </header>
     <main>
-      <h3>Welcome!</h3>
-      <p>
-        This web app is art of the Autonomous Airship Group Design Project of 2020.
-        Use it to interact with the airship by giving voice commands, using virtual joysticks, or request it to
-        navigate to a specific location.
-      </p>
-      <p>Click on the menu button on the top left to discover more.</p>
-
-      <h3>What is AIM Airhsip?</h3>
-      <p>
-        AIM Airship, meaning Autonomous Interactive Mapping Airship, is the brainchild of a group of 25 third year
-        students from the Aeronautical Engineering MEng programme.
-      </p>
-      <p>Find out more in the Project Info page.</p>
+        <div class="wrapper" ></div>  <!--bg image-->
+        <div style="z-index:1!important; position: relative">
+          <h3>Welcome!</h3>
+          <p>
+            This web app is art of the Autonomous Airship Group Design Project of 2020.
+            Use it to interact with the airship by giving voice commands, using virtual joysticks, or request it to
+            navigate to a specific location.
+          </p>
+          <p>Click on the menu button on the top left to discover more.</p>
+    
+          <h3>What is AIM Airhsip?</h3>
+          <p>
+            AIM Airship, meaning Autonomous Interactive Mapping Airship, is the brainchild of a group of 25 third year
+            students from the Aeronautical Engineering MEng programme.
+          </p>
+          <p>Find out more in the Project Info page.</p>
+        </div>
     </main>
     <footer>
       <p>Imperial College London</p>
