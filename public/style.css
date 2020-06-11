@@ -36,6 +36,9 @@
   ul {
     text-align: center; 
   }
+  i {
+    color: rgb(248, 232, 0);
+  }
   @keyframes bg-pulse {
     0% {
       background-color: #fff;
@@ -76,7 +79,7 @@
   }
   button:hover,
   button:focus {
-    background: rgb(253, 236, 0);
+    background: rgb(248, 232, 0);
     color: rgb(0,0,0);
   }
   
