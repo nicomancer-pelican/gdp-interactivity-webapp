@@ -1,34 +1,40 @@
 {
-    "interactions" : {
-      "commands" : null,
-      "lights" : null,
-      "sounds" : null,
-      "reports" : null
-    },
+  "interactions" : {
+    "Active" : null,
+    "GUIcommands" : null,
+    "GUIspeed" : "slider output",
+    "commands" : null,
+    "destinations" : null,
+    "joystick" : null,
+    "reports" : null
+  },
 
+  "Active" : {
+    "destinations" : true,
+    "joystick" : true,
+    "voice" : true
+  },
 
-    "commands": {
-      "1" : {
-        "manoeuvre" : "test",
-        "complete" : true
-      },
-      "2" : {
-        "manoeuvre" : "another test",
-        "complete" : false
-      }
-    },
+  "GUIcommands" : {
+    "Destination" : true
+  },
 
-
-    "lights": {
-      "uniqueID": {
-        "colour" : "colour"
+  "commands" : {
+    "1" : {
+      "manoeuvre" : "voice input",
+      "complete" : false
     }
   },
 
-  "sounds": {
-    "uniqueID": {
-      "track" : "track no."
-    }
+  "destinations" : {
+    "Destination" : true
+  },
+
+  "joystick" : {
+    "complete" : false,
+    "1" : "joystick input",
+    "2" : "joystick input",
+    "200" : "joystick input"
   },
 
   "reports": {
