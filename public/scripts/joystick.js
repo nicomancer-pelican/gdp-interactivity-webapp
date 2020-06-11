@@ -81,7 +81,7 @@ window.addEventListener('DOMContentLoaded', () => {
         var left = "00.00";
         var right = "00.00";
   
-        startAnimating(30)  //30 fps
+        startAnimating(20)  //20 fps
   
         // FUNCTIONS:
         // FPS CONTROL
