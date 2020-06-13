@@ -96,31 +96,11 @@ window.addEventListener('DOMContentLoaded', () => {
           console.log(`Start time: ${startTime}`);
   
           var pull
-          // find position i near the end to go a bit faster
-          const findPos = function(){
-              return new Promise(function(resolve){
-                var incoming
-                var temp
-                var key
-                var endRef = firebase.database().ref('joystick').limitToLast(1)
-  
-                endRef.once('value', function(snapshot){
-                  incoming = snapshot.val();
-                })
-                .then(function(){
-                  temp = Object.keys(incoming)
-                  key = parseInt(temp[0])
-                  console.log(`key retrieved: ${key}`)
-                  resolve(key)
-                })
-              })
-          }
   
           // pull data from position i
           const pullData = function(i){
               return new Promise(function(resolve){
-                var hello = `${i}`;
-                var cpRef = firebase.database().ref('joystick').child(hello).child('complete')
+                var cpRef = firebase.database().ref('joystick').child('complete')
   
                 cpRef.once('value', function(snapshot){
                   pull = snapshot.val();
@@ -136,9 +116,7 @@ window.addEventListener('DOMContentLoaded', () => {
           const loop = function(value){
               complete = pullData(value)
               .then(complete => {
-                if (complete === null){
-                  return loop(value + 1)
-                } else if (complete === false){
+                if (complete === false){
                   joystickR.removeEventListener('touchStartValidation', function (event) {
                     var touch = event.changedTouches[0];
                     if (touch.pageX < window.innerWidth / 2 & touch.pageY > 80) return true;
@@ -162,11 +140,8 @@ window.addEventListener('DOMContentLoaded', () => {
                     location.href = 'index.html';
                   }
                 } else {
-                  console.log(`queue position: ${value}`)
-                  i = value;
-                  var hello = `${i}`;
-                  var noRef = firebase.database().ref('joystick').child(hello);
-                  noRef.set({
+                  var noRef = firebase.database().ref('joystick');
+                  noRef.update({
                     "complete" : false
                   });
                   animate()
@@ -174,11 +149,8 @@ window.addEventListener('DOMContentLoaded', () => {
               })
           }
   
-          findPos()
+          pullData()
           .then(function(value){
-            return value
-          })
-          .then((value) => {
             return value
           })
           .then((value) => {
@@ -283,9 +255,8 @@ window.addEventListener('DOMContentLoaded', () => {
               // PUSH DATA
               function pushData(i,j){
                 return new Promise(function(resolve){
-                  var hello = `${i}`;
                   var smile = `${j}`;
-                  var noRef = firebase.database().ref('joystick').child(hello);
+                  var noRef = firebase.database().ref('joystick');
                   noRef.update({
                     [smile] : data
                   });
