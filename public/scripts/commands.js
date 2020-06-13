@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // ACTIVE? - check if this function is active
   const activeQuery = function(){
     return new Promise(function(resolve){
-      var aRef = firebase.database().ref('active').child('voice')
+      var aRef = firebase.database().ref('Active').child('voice')
 
       aRef.once('value', function(snapshot){
         pull = snapshot.val();

@@ -9,6 +9,7 @@ function updateVoiceCommands(i)
 %   written for the Autonomous Airship 2020 Group Design Project
 %   Imperial College London, Department of Aeronautics
 
+    %update status of complete to true
     URL = sprintf('https://airship-a31a9.firebaseio.com/commands/%d/complete.json',i);
     options = weboptions('KeyName', 'X-HTTP-Method-Override', 'KeyValue','PUT');
     webwrite(URL,'true',options);

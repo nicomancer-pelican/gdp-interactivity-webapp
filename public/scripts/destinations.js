@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // ACTIVE? - check if this function is active
   const activeQuery = function(){
     return new Promise(function(resolve){
-      var aRef = firebase.database().ref('active').child('destinations')
+      var aRef = firebase.database().ref('Active').child('destinations')
 
       aRef.once('value', function(snapshot){
         pull = snapshot.val();
@@ -26,6 +26,11 @@ window.addEventListener('DOMContentLoaded', () => {
     const result = document.getElementById('result')
     const main = document.getElementsByTagName('main')[0]
 
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    var slideClass = document.getElementsByClassName("slidecontainer")[0];
+    output.innerHTML = `${slider.value/10} m/s`;
+
     // FIREBASE REALTIME DATABASE BITS AND BOBS
     var database = firebase.database();
     var dbRef = firebase.database().ref('destinations');
@@ -37,7 +42,8 @@ window.addEventListener('DOMContentLoaded', () => {
           var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "foyer" : true
+            "foyer" : true,
+            "speed" : `${slider.value/10}`
           });
 
           var message = 'data sent to database'
@@ -45,7 +51,11 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      pushData()
+      slideClass.removeAttribute('hidden');
+      slider.oninput = function() {
+        pushData()
+        output.innerHTML = `${slider.value/10} m/s`;
+      }
     })
 
     // COMMON ROOM
@@ -55,7 +65,8 @@ window.addEventListener('DOMContentLoaded', () => {
           var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "common room" : true
+            "common room" : true,
+            "speed" : `${slider.value/10}`
           });
 
           var message = 'data sent to database'
@@ -63,7 +74,11 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      pushData()
+      slideClass.removeAttribute('hidden');
+      slider.oninput = function() {
+        pushData()
+        output.innerHTML = `${slider.value/10} m/s`;
+      }
     })
 
     // CAGB LOBBY
@@ -73,7 +88,8 @@ window.addEventListener('DOMContentLoaded', () => {
           var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "CAGB lobby" : true
+            "CAGB lobby" : true,
+            "speed" : `${slider.value/10}`
           });
 
           var message = 'data sent to database'
@@ -81,7 +97,11 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      pushData()
+      slideClass.removeAttribute('hidden');
+      slider.oninput = function() {
+        pushData()
+        output.innerHTML = `${slider.value/10} m/s`;
+      }
     })
 
     // MENS BATHROOM
@@ -91,7 +111,8 @@ window.addEventListener('DOMContentLoaded', () => {
           var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "mens bathroom" : true
+            "mens bathroom" : true,
+            "speed" : `${slider.value/10}`
           });
 
           var message = 'data sent to database'
@@ -99,7 +120,11 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      pushData()
+      slideClass.removeAttribute('hidden');
+      slider.oninput = function() {
+        pushData()
+        output.innerHTML = `${slider.value/10} m/s`;
+      }
     })
 
     // LADIES BATHROOM
@@ -109,7 +134,8 @@ window.addEventListener('DOMContentLoaded', () => {
           var noRef = firebase.database().ref('destinations')
 
           noRef.set({
-            "ladies bathroom" : true
+            "ladies bathroom" : true,
+            "speed" : `${slider.value/10}`
           });
 
           var message = 'data sent to database'
@@ -117,7 +143,11 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       }
 
-      pushData()
+      slideClass.removeAttribute('hidden');
+      slider.oninput = function() {
+        pushData()
+        output.innerHTML = `${slider.value/10} m/s`;
+      }
     })
     } else {
     document.getElementById("button1").style.display = "none"
